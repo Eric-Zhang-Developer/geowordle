@@ -7,7 +7,7 @@ export default function Home() {
   const { mode, round, guesses, selected, setSelected, submitGuess, isWon, remaining, switchToEndless, nextRound } = useGame();
 
   return (
-    <main className="p-8 font-mono">
+    <main className="p-8 font-mono flex flex-col items-center">
       <div className="flex items-center gap-2 mb-1">
         <h1 className="text-2xl font-bold">GeoWordle</h1>
         {mode === 'daily' ? (
