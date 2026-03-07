@@ -1,59 +1,7 @@
 "use client";
 
 import { useGame } from "../hooks/useGame";
-import { CellState, State } from "../lib/gameLogic";
-
-const COLUMNS = [
-  "region",
-  "population",
-  "area",
-  "gdpPerCapita",
-  "coastline",
-  "medianAge",
-  "yearOfStatehood",
-  "landlocked",
-] as const;
-
-type Column = (typeof COLUMNS)[number];
-
-const BG: Record<CellState, string> = {
-  correct: "bg-green-600",
-  incorrect: "bg-red-600",
-  partial: "bg-yellow-600",
-  close: "bg-orange-500",
-  higher: "bg-red-600",
-  lower: "bg-red-600",
-};
-
-const INDICATOR: Partial<Record<CellState, string>> = {
-  higher: " ▲",
-  lower: " ▼",
-  close: " ≈",
-  partial: " ~",
-};
-
-function fmt(col: Column, s: State): string {
-  switch (col) {
-    case "population":
-      return s.population >= 1e6
-        ? `${(s.population / 1e6).toFixed(1)}M`
-        : `${(s.population / 1e3).toFixed(0)}K`;
-    case "area":
-      return s.area.toLocaleString();
-    case "gdpPerCapita":
-      return `$${(s.gdpPerCapita / 1000).toFixed(0)}K`;
-    case "medianAge":
-      return `${s.medianAge}`;
-    case "yearOfStatehood":
-      return `${s.yearOfStatehood}`;
-    case "region":
-      return s.region;
-    case "coastline":
-      return s.coastline;
-    case "landlocked":
-      return s.landlocked ? "Yes" : "No";
-  }
-}
+import { GuessTable } from "../components/GuessTable";
 
 export default function Home() {
   const { mode, round, guesses, selected, setSelected, submitGuess, isWon, remaining, switchToEndless, nextRound } = useGame();
@@ -77,49 +25,8 @@ export default function Home() {
         red+arrow=direction.
       </p>
 
-      <div className="overflow-x-auto mb-6">
-        <table className="border-collapse">
-          <thead>
-            <tr>
-              <th className="border border-gray-400 px-3 py-1.5 bg-gray-200 text-xs text-left whitespace-nowrap">
-                State
-              </th>
-              {COLUMNS.map((c) => (
-                <th
-                  key={c}
-                  className="border border-gray-400 px-3 py-1.5 bg-gray-200 text-xs text-left whitespace-nowrap"
-                >
-                  {c}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {guesses.map((g, i) => (
-              <tr key={i}>
-                <td className="border border-gray-400 px-3 py-1.5 text-sm font-bold">
-                  {g.state.name}
-                </td>
-                {COLUMNS.map((c) => {
-                  const state = g.cells[c];
-                  return (
-                    <td
-                      key={c}
-                      className={`border border-gray-400 px-3 py-1.5 text-sm text-white min-w-20 ${BG[state]}`}
-                    >
-                      {fmt(c, g.state)}
-                      {INDICATOR[state] ?? ""}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
       {isWon ? (
-        <div className="space-y-3">
+        <div className="space-y-3 mb-6">
           <p className="text-green-600 text-xl font-bold">
             Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
           </p>
@@ -134,7 +41,7 @@ export default function Home() {
           )}
         </div>
       ) : (
-        <div className="flex gap-2">
+        <div className="flex gap-2 mb-6">
           <select
             value={selected}
             onChange={(e) => setSelected(e.target.value)}
@@ -155,6 +62,8 @@ export default function Home() {
           </button>
         </div>
       )}
+
+      <GuessTable guesses={guesses} />
     </main>
   );
 }
