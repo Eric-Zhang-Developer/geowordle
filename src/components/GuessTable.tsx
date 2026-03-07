@@ -24,9 +24,9 @@ const BG: Record<CellState, string> = {
   correct:   'bg-green-700',
   incorrect: 'bg-red-700',
   partial:   'bg-yellow-600',
-  close:     'bg-orange-600',
-  higher:    'bg-orange-600',
-  lower:     'bg-orange-600',
+  close:     'bg-amber-500',
+  higher:    'bg-amber-500',
+  lower:     'bg-amber-500',
 };
 
 const INDICATOR: Partial<Record<CellState, string>> = {
@@ -39,14 +39,14 @@ const INDICATOR: Partial<Record<CellState, string>> = {
 export function GuessTable({ guesses }: { guesses: GuessResult[] }) {
   return (
     <div className="overflow-x-auto">
-      <table className="border-collapse rounded-xl overflow-hidden">
+      <table className="border-separate border-spacing-2">
         <thead>
           <tr>
-            <th className="bg-gray-800 text-white text-xs font-semibold px-4 py-3 text-center whitespace-nowrap border border-gray-700">
+            <th className="bg-gray-800 text-white text-xs font-semibold py-3 text-center whitespace-nowrap w-28 rounded">
               State
             </th>
             {COLUMNS.map(col => (
-              <th key={col.key} className="bg-gray-800 text-white text-xs font-semibold px-4 py-3 text-center whitespace-nowrap border border-gray-700">
+              <th key={col.key} className="bg-gray-800 text-white text-xs font-semibold py-3 text-center whitespace-nowrap w-24 rounded">
                 {col.label}
               </th>
             ))}

@@ -26,11 +26,11 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
     return () => timers.forEach(clearTimeout);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const base = 'text-sm font-semibold px-4 py-4 text-center border border-gray-700';
+  const base = 'text-sm font-semibold text-center align-middle rounded h-24';
 
   return (
     <tr>
-      <td className={`${base} whitespace-nowrap font-bold text-white min-w-24
+      <td className={`${base} whitespace-nowrap font-bold text-white w-28
         ${revealed > 0 ? 'bg-gray-900' : 'bg-gray-700'}
         ${revealed === 1 ? 'cell-flip' : ''}`}>
         {revealed > 0 ? guess.state.name : ''}
@@ -43,7 +43,7 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
         return (
           <td
             key={col.key}
-            className={`${base} text-white min-w-24
+            className={`${base} text-white w-24
               ${isRevealed ? bg[cell] : 'bg-gray-700'}
               ${isFlipping ? 'cell-flip' : ''}`}
           >
