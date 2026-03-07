@@ -1,0 +1,35 @@
+[
+  {
+    "name": "California",
+    "region": "West",
+    "population": 39538223,
+    "area": 163696,
+    "gdpPerCapita": 89540,
+    "coastline": "Pacific",
+    "medianAge": 37.3,
+    "yearOfStatehood": 1850,
+    "landlocked": false
+  },
+  {
+    "name": "Texas",
+    "region": "South",
+    "population": 29145505,
+    "area": 268596,
+    "gdpPerCapita": 63600,
+    "coastline": "Gulf",
+    "medianAge": 35.5,
+    "yearOfStatehood": 1845,
+    "landlocked": false
+  },
+  {
+    "name": "Wyoming",
+    "region": "West",
+    "population": 576851,
+    "area": 97813,
+    "gdpPerCapita": 70176,
+    "coastline": "None",
+    "medianAge": 38.5,
+    "yearOfStatehood": 1890,
+    "landlocked": true
+  }
+]
