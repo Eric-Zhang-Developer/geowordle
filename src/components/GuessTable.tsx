@@ -1,4 +1,5 @@
 import { CellState, GuessResult, State } from '../lib/gameLogic';
+import { GuessRow } from './GuessRow';
 
 type Column = keyof Omit<State, 'name'>;
 
@@ -20,12 +21,12 @@ const COLUMNS: ColumnDef[] = [
 ];
 
 const BG: Record<CellState, string> = {
-  correct:   'bg-green-600',
-  incorrect: 'bg-red-600',
+  correct:   'bg-green-700',
+  incorrect: 'bg-red-700',
   partial:   'bg-yellow-600',
-  close:     'bg-orange-500',
-  higher:    'bg-red-600',
-  lower:     'bg-red-600',
+  close:     'bg-orange-600',
+  higher:    'bg-orange-600',
+  lower:     'bg-orange-600',
 };
 
 const INDICATOR: Partial<Record<CellState, string>> = {
@@ -38,14 +39,14 @@ const INDICATOR: Partial<Record<CellState, string>> = {
 export function GuessTable({ guesses }: { guesses: GuessResult[] }) {
   return (
     <div className="overflow-x-auto">
-      <table className="border-collapse">
+      <table className="border-collapse rounded-xl overflow-hidden">
         <thead>
           <tr>
-            <th className="border border-gray-400 px-3 py-1.5 bg-gray-200 text-xs text-left whitespace-nowrap">
+            <th className="bg-gray-800 text-white text-xs font-semibold px-4 py-3 text-center whitespace-nowrap border border-gray-700">
               State
             </th>
             {COLUMNS.map(col => (
-              <th key={col.key} className="border border-gray-400 px-3 py-1.5 bg-gray-200 text-xs text-left whitespace-nowrap">
+              <th key={col.key} className="bg-gray-800 text-white text-xs font-semibold px-4 py-3 text-center whitespace-nowrap border border-gray-700">
                 {col.label}
               </th>
             ))}
@@ -53,19 +54,14 @@ export function GuessTable({ guesses }: { guesses: GuessResult[] }) {
         </thead>
         <tbody>
           {guesses.map((g, i) => (
-            <tr key={i}>
-              <td className="border border-gray-400 px-3 py-1.5 text-sm font-bold whitespace-nowrap">
-                {g.state.name}
-              </td>
-              {COLUMNS.map(col => {
-                const cell = g.cells[col.key];
-                return (
-                  <td key={col.key} className={`border border-gray-400 px-3 py-1.5 text-sm text-white min-w-20 ${BG[cell]}`}>
-                    {col.fmt(g.state)}{INDICATOR[cell] ?? ''}
-                  </td>
-                );
-              })}
-            </tr>
+            <GuessRow
+              key={i}
+              guess={g}
+              isNew={i === guesses.length - 1}
+              columns={COLUMNS}
+              bg={BG}
+              indicator={INDICATOR}
+            />
           ))}
         </tbody>
       </table>

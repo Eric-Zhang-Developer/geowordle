@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@keyframes flip-in {
+  0%   { transform: scaleX(1); }
+  40%  { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+.cell-flip {
+  animation: flip-in 0.4s ease-in-out both;
+}
