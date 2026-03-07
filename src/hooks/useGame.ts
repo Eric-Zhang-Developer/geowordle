@@ -1,13 +1,17 @@
 'use client';
-
 import { useState } from 'react';
 import statesData from '../data/states.json';
 import { compareGuess, GuessResult, State } from '../lib/gameLogic';
-import { getTodaysState } from '../lib/dailySeed';
+import { getTodaysState, getRandomState } from '../lib/dailySeed';
+
+type Mode = 'daily' | 'endless';
 
 export function useGame() {
-  const [target] = useState<State>(() => getTodaysState());
-  const [guesses, setGuesses] = useState<GuessResult[]>([]);
+  const [mode, setMode]         = useState<Mode>('daily');
+  const [round, setRound]       = useState(1);
+  const [playedNames, setPlayedNames] = useState<Set<string>>(new Set());
+  const [target, setTarget]     = useState<State>(() => getTodaysState());
+  const [guesses, setGuesses]   = useState<GuessResult[]>([]);
   const [selected, setSelected] = useState('');
 
   const isWon = guesses.some(g => g.isWin);
@@ -22,5 +26,25 @@ export function useGame() {
     setSelected('');
   }
 
-  return { guesses, selected, setSelected, submitGuess, isWon, remaining };
+  function switchToEndless() {
+    const seeded = new Set([target.name]);
+    const next = getRandomState(seeded);
+    setPlayedNames(new Set([...seeded, next.name]));
+    setTarget(next);
+    setGuesses([]);
+    setSelected('');
+    setMode('endless');
+    setRound(1);
+  }
+
+  function nextRound() {
+    const next = getRandomState(playedNames);
+    setPlayedNames(prev => new Set([...prev, next.name]));
+    setTarget(next);
+    setGuesses([]);
+    setSelected('');
+    setRound(r => r + 1);
+  }
+
+  return { mode, round, guesses, selected, setSelected, submitGuess, isWon, remaining, switchToEndless, nextRound };
 }
