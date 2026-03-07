@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useGame } from '../hooks/useGame';
 import { CellState, State } from '../lib/gameLogic';
 
@@ -59,6 +60,17 @@ const td: React.CSSProperties = {
 
 export default function Home() {
   const { guesses, selected, setSelected, submitGuess, isWon, remaining } = useGame();
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+
+  const query = selected.trim().toLowerCase();
+  const suggestions = query
+    ? remaining
+        .filter(s => {
+          const words = s.name.toLowerCase().split(/\s+/);
+          return words.some(w => w.startsWith(query));
+        })
+        .slice(0, 12)
+    : [];
 
   return (
     <main style={{ padding: 32, fontFamily: 'monospace' }}>
@@ -98,23 +110,66 @@ export default function Home() {
           Got it in {guesses.length} guess{guesses.length !== 1 ? 'es' : ''}!
         </p>
       ) : (
-        <div style={{ display: 'flex', gap: 8 }}>
-          <select
-            value={selected}
-            onChange={e => setSelected(e.target.value)}
-            style={{ padding: '8px 12px', fontSize: 15 }}
-          >
-            <option value="">— pick a state —</option>
-            {remaining.map(s => (
-              <option key={s.name} value={s.name}>{s.name}</option>
-            ))}
-          </select>
-          <button
-            onClick={submitGuess}
-            style={{ padding: '8px 20px', fontSize: 15, cursor: 'pointer' }}
-          >
-            Guess
-          </button>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+          <div style={{ position: 'relative' }}>
+            <input
+              value={selected}
+              placeholder="Type a state..."
+              onChange={e => {
+                setSelected(e.target.value);
+                setIsPickerOpen(true);
+              }}
+              onFocus={() => setIsPickerOpen(true)}
+              onBlur={() => {
+                // Let suggestion clicks land before closing.
+                window.setTimeout(() => setIsPickerOpen(false), 120);
+              }}
+              style={{
+                padding: '8px 12px',
+                fontSize: 15,
+                width: 220,
+                border: '1px solid #999',
+                borderRadius: 4,
+                background: '#fff',
+              }}
+            />
+            {isPickerOpen && suggestions.length > 0 && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 6px)',
+                  left: 0,
+                  right: 0,
+                  background: '#fff',
+                  border: '1px solid #999',
+                  boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
+                  zIndex: 10,
+                  maxHeight: 240,
+                  overflowY: 'auto',
+                }}
+              >
+                {suggestions.map(s => (
+                  <div
+                    key={s.name}
+                    onMouseDown={e => {
+                      e.preventDefault();
+                      submitGuess(s.name);
+                      setIsPickerOpen(false);
+                    }}
+                    style={{
+                      padding: '8px 10px',
+                      cursor: 'pointer',
+                      borderBottom: '1px solid #eee',
+                      fontSize: 14,
+                      background: '#fff',
+                    }}
+                  >
+                    {s.name}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </main>
