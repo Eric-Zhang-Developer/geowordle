@@ -12,7 +12,7 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
   guesses.forEach((g) => {
     const abbr = STATE_ABBREVIATIONS[g.state.name];
     if (!abbr) return;
-    customize[abbr] = { fill: g.isWin ? "#15803d" : "#991b1b" };
+    customize[abbr] = { fill: g.isWin ? "#2f8f68" : "#ab4747" };
   });
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
       <div className="w-full overflow-hidden">
         <USAMap
           customize={customize}
-          defaultFill="#c8b99a"
+          defaultFill="#262322"
           width={width}
           height={height}
         />
