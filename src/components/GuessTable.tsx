@@ -44,7 +44,7 @@ const INDICATOR: Record<CellDirection, string> = {
 
 export function GuessTable({ guesses }: { guesses: GuessResult[] }) {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto mb-10">
       <table className="border-separate border-spacing-2">
         <thead>
           <tr>
