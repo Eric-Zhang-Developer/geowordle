@@ -30,7 +30,10 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
     if (!isNew) return;
     // +1 extra timer clears the last cell's isFlipping overlay
     const timers = Array.from({ length: total + 1 }, (_, i) =>
-      setTimeout(() => setRevealed(i + 1), i * STAGGER_MS),
+      setTimeout(() => {
+        setRevealed(i + 1);
+        if (i < total) new Audio("/sounds/card-flip.mp3").play().catch(() => {});
+      }, i * STAGGER_MS),
     );
     return () => timers.forEach(clearTimeout);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

@@ -42,7 +42,10 @@ export default function Home() {
   useEffect(() => {
     if (!isWon) return;
 
-    const timer = window.setTimeout(() => setIsVictoryRevealed(true), VICTORY_REVEAL_DELAY_MS);
+    const timer = window.setTimeout(() => {
+      setIsVictoryRevealed(true);
+      new Audio("/sounds/victory.mp3").play().catch(() => {});
+    }, VICTORY_REVEAL_DELAY_MS);
     return () => window.clearTimeout(timer);
   }, [isWon]);
 
