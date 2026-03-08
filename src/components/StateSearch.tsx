@@ -72,7 +72,7 @@ export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearc
   return (
     <div className="relative w-full max-w-sm mb-6">
       {/* Ghost suggestion layer (behind) */}
-      <div className="w-full px-3 py-2 text-base text-gray-600 pointer-events-none whitespace-nowrap overflow-hidden select-none border border-transparent rounded" aria-hidden="true">
+      <div className="w-full px-3 py-2 text-base text-stone-400 pointer-events-none whitespace-nowrap overflow-hidden select-none border border-transparent rounded" aria-hidden="true">
         {ghostText || "\u00A0"}
       </div>
       <input
@@ -101,10 +101,10 @@ export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearc
             }
           }
         }}
-        className="absolute inset-0 w-full px-3 py-2 text-base bg-transparent text-white border border-gray-600 rounded outline-none placeholder-gray-500 focus:border-blue-400"
+        className="absolute inset-0 w-full px-3 py-2 text-base bg-transparent text-stone-900 border border-stone-400 rounded outline-none placeholder-stone-400 focus:border-amber-700"
       />
       {isPickerOpen && suggestions.length > 0 && (
-        <div className="absolute z-10 mt-1 w-full max-h-80 overflow-y-auto bg-gray-900 border border-gray-700 rounded shadow-lg">
+        <div className="absolute z-10 mt-1 w-full max-h-80 overflow-y-auto bg-amber-50 border border-stone-300 rounded shadow-lg">
           {suggestions.map((s) => (
             <button
               key={s.name}
@@ -114,7 +114,7 @@ export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearc
                 onSubmit(s.name);
                 setIsPickerOpen(false);
               }}
-              className="w-full flex items-center gap-3 px-4 py-3 text-left text-base hover:bg-gray-800 cursor-pointer"
+              className="w-full flex items-center gap-3 px-4 py-3 text-left text-base text-stone-900 hover:bg-amber-100 cursor-pointer"
             >
               <StateThumb name={s.name} />
               <span>{s.name}</span>

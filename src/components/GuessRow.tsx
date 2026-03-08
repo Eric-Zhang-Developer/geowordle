@@ -45,8 +45,8 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
   return (
     <tr>
       <td
-        className={`${base} min-w-[132px] px-0 font-bold text-white sm:min-w-[180px]
-        ${nameActive ? "bg-gray-900" : "bg-gray-700"}`}
+        className={`${base} min-w-[132px] px-0 font-bold text-stone-900 sm:min-w-[180px]
+        ${nameActive ? "bg-stone-200" : "bg-stone-300"}`}
       >
         {nameActive && (
           <div className="flex h-full w-full items-center gap-2 px-2 sm:gap-3 sm:px-3">
@@ -62,7 +62,7 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
             <span className="flex-1 truncate text-left">{guess.state.name}</span>
           </div>
         )}
-        {nameFlipping && <span className="absolute inset-0 bg-gray-700 rounded animate-cell-uncover origin-right" />}
+        {nameFlipping && <span className="absolute inset-0 bg-stone-300 rounded animate-cell-uncover origin-right" />}
       </td>
       {columns.map((col, i) => {
         const cellIdx = i + 1;
@@ -72,10 +72,10 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
         return (
           <td
             key={col.key}
-            className={`${base} w-[88px] text-white sm:w-24 ${isActive ? bg[cell.state] : "bg-gray-700"}`}
+            className={`${base} w-[88px] text-white sm:w-24 ${isActive ? bg[cell.state] : "bg-stone-300"}`}
           >
             {isActive && `${col.fmt(guess.state)}${cell.direction ? indicator[cell.direction] : ""}`}
-            {isFlipping && <span className="absolute inset-0 bg-gray-700 rounded animate-cell-uncover origin-right" />}
+            {isFlipping && <span className="absolute inset-0 bg-stone-300 rounded animate-cell-uncover origin-right" />}
           </td>
         );
       })}

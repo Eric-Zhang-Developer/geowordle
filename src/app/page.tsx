@@ -74,16 +74,16 @@ export default function Home() {
         <div className="mb-8 flex flex-col items-center gap-2">
         <h1 className="text-3xl font-bold">Geodle</h1>
         {mode === "daily" ? (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-900 text-blue-300 border border-blue-700">
+          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 border border-blue-300">
             Daily
           </span>
         ) : (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-purple-900 text-purple-300 border border-purple-700">
+          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-purple-100 text-purple-800 border border-purple-300">
             Endless · Round {round}
           </span>
         )}
         </div>
-      <div className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-gray-400">
+      <div className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-stone-600">
         <span className="flex items-center gap-1 whitespace-nowrap">
           <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
           Correct
@@ -96,13 +96,13 @@ export default function Home() {
           <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
           Close
         </span>
-        <span className="text-center text-gray-500">▲▼ = too low / too high</span>
+        <span className="text-center text-stone-500">▲▼ = too low / too high</span>
       </div>
 
       {isWon ? (
         isVictoryRevealed ? (
           <div className="mb-6 space-y-3 text-center">
-            <p className="text-green-400 text-xl font-bold">
+            <p className="text-green-700 text-xl font-bold">
               Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
             </p>
             <div className="flex justify-center gap-3">

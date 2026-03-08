@@ -39,11 +39,11 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
 
   return (
     <div ref={containerRef} className="mt-4 flex w-full max-w-4xl flex-col items-center">
-      <p className="text-sm text-gray-400 text-center mb-1">Your guesses</p>
+      <p className="text-sm text-stone-600 text-center mb-1">Your guesses</p>
       <div className="w-full overflow-hidden">
         <USAMap
           customize={customize}
-          defaultFill="#374151"
+          defaultFill="#c8b99a"
           width={width}
           height={height}
         />

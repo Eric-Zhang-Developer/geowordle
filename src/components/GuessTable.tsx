@@ -45,20 +45,20 @@ const INDICATOR: Record<CellDirection, string> = {
 export function GuessTable({ guesses }: { guesses: GuessResult[] }) {
   return (
     <div className="mb-10 w-full max-w-full">
-      <p className="mb-2 pr-1 text-right text-[11px] text-gray-500 sm:hidden">
+      <p className="mb-2 pr-1 text-right text-[11px] text-stone-500 sm:hidden">
         Swipe to view all clues
       </p>
       <div className="w-full max-w-full overflow-x-auto overscroll-x-contain pb-2">
       <table className="min-w-max border-separate border-spacing-2">
         <thead>
           <tr>
-            <th className="min-w-[132px] rounded bg-gray-800 px-2 py-2 text-center text-[10px] font-semibold whitespace-nowrap text-white sm:min-w-[180px] sm:py-3 sm:text-xs">
+            <th className="min-w-[132px] rounded bg-stone-700 px-2 py-2 text-center text-[10px] font-semibold whitespace-nowrap text-amber-50 sm:min-w-[180px] sm:py-3 sm:text-xs">
               State
             </th>
             {COLUMNS.map((col) => (
               <th
                 key={col.key}
-                className="w-[88px] rounded bg-gray-800 px-1 py-2 text-center text-[10px] font-semibold whitespace-nowrap text-white sm:w-24 sm:py-3 sm:text-xs"
+                className="w-[88px] rounded bg-stone-700 px-1 py-2 text-center text-[10px] font-semibold whitespace-nowrap text-amber-50 sm:w-24 sm:py-3 sm:text-xs"
               >
                 {col.label}
               </th>
