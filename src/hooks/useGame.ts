@@ -3,6 +3,7 @@ import { useState } from 'react';
 import statesData from '../data/states.json';
 import { compareGuess, GuessResult, State } from '../lib/gameLogic';
 import { getTodaysState, getRandomState } from '../lib/dailySeed';
+import { MAX_GUESSES, RoundStatus } from '../lib/gameRules';
 
 type Mode = 'daily' | 'endless';
 
@@ -15,10 +16,12 @@ export function useGame() {
   const [selected, setSelected] = useState('');
 
   const isWon = guesses.some(g => g.isWin);
+  const status: RoundStatus = isWon ? 'won' : guesses.length >= MAX_GUESSES ? 'lost' : 'playing';
   const guessedNames = new Set(guesses.map(g => g.state.name));
   const remaining = (statesData as State[]).filter(s => !guessedNames.has(s.name));
 
   function submitGuess(name?: string) {
+    if (status !== 'playing') return;
     const guessName = name ?? selected;
     if (!guessName) return;
     const state = (statesData as State[]).find(s => s.name === guessName);
@@ -47,5 +50,19 @@ export function useGame() {
     setRound(r => r + 1);
   }
 
-  return { mode, round, guesses, selected, setSelected, submitGuess, isWon, remaining, switchToEndless, nextRound };
+  return {
+    mode,
+    round,
+    guesses,
+    selected,
+    setSelected,
+    submitGuess,
+    isWon,
+    status,
+    remaining,
+    targetName: target.name,
+    maxGuesses: MAX_GUESSES,
+    switchToEndless,
+    nextRound,
+  };
 }

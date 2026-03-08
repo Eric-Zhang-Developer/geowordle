@@ -99,10 +99,13 @@ export function StateSearch({ value, remaining, onChange, onSubmit, disabled }: 
             if (exact) {
               onSubmit(exact.name);
               setIsPickerOpen(false);
+            } else if (suggestions.length > 0) {
+              onSubmit(suggestions[0].name);
+              setIsPickerOpen(false);
             }
           }
         }}
-        className="absolute inset-0 w-full px-3 py-2 text-base bg-white/30 text-stone-900 border border-stone-600 rounded outline-none placeholder-stone-500 focus:border-stone-900"
+        className="absolute inset-0 w-full rounded border border-stone-700 bg-white/40 px-3 py-2 text-base text-stone-900 outline-none placeholder-stone-500 focus:border-stone-900"
       />
       {isPickerOpen && suggestions.length > 0 && (
         <div className="absolute z-10 mt-1 w-full max-h-80 overflow-y-auto bg-stone-900 border border-stone-700 rounded shadow-lg">

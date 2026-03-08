@@ -6,9 +6,8 @@
     "area": 52420,
     "gdpPerCapita": 46000,
     "coastline": "Gulf",
-    "medianAge": 39.2,
     "yearOfStatehood": 1819,
-    "landlocked": false
+    "electoralVotes": 9
   },
   {
     "name": "Alaska",
@@ -17,20 +16,18 @@
     "area": 663268,
     "gdpPerCapita": 65000,
     "coastline": "Pacific",
-    "medianAge": 35.3,
     "yearOfStatehood": 1959,
-    "landlocked": false
+    "electoralVotes": 3
   },
   {
     "name": "Arizona",
-    "region": "West",
+    "region": "Southwest",
     "population": 7151502,
     "area": 113990,
     "gdpPerCapita": 53000,
     "coastline": "None",
-    "medianAge": 38.3,
     "yearOfStatehood": 1912,
-    "landlocked": true
+    "electoralVotes": 11
   },
   {
     "name": "Arkansas",
@@ -39,9 +36,8 @@
     "area": 53179,
     "gdpPerCapita": 43000,
     "coastline": "None",
-    "medianAge": 38.3,
     "yearOfStatehood": 1836,
-    "landlocked": true
+    "electoralVotes": 6
   },
   {
     "name": "California",
@@ -50,9 +46,8 @@
     "area": 163696,
     "gdpPerCapita": 89540,
     "coastline": "Pacific",
-    "medianAge": 37.3,
     "yearOfStatehood": 1850,
-    "landlocked": false
+    "electoralVotes": 54
   },
   {
     "name": "Colorado",
@@ -61,9 +56,8 @@
     "area": 104094,
     "gdpPerCapita": 72000,
     "coastline": "None",
-    "medianAge": 37.0,
     "yearOfStatehood": 1876,
-    "landlocked": true
+    "electoralVotes": 10
   },
   {
     "name": "Connecticut",
@@ -72,20 +66,18 @@
     "area": 5543,
     "gdpPerCapita": 83000,
     "coastline": "Atlantic",
-    "medianAge": 41.2,
     "yearOfStatehood": 1788,
-    "landlocked": false
+    "electoralVotes": 7
   },
   {
     "name": "Delaware",
-    "region": "South",
+    "region": "Northeast",
     "population": 989948,
     "area": 2489,
     "gdpPerCapita": 78000,
     "coastline": "Atlantic",
-    "medianAge": 41.0,
     "yearOfStatehood": 1787,
-    "landlocked": false
+    "electoralVotes": 3
   },
   {
     "name": "Florida",
@@ -94,9 +86,8 @@
     "area": 65758,
     "gdpPerCapita": 57000,
     "coastline": "Atlantic",
-    "medianAge": 42.2,
     "yearOfStatehood": 1845,
-    "landlocked": false
+    "electoralVotes": 30
   },
   {
     "name": "Georgia",
@@ -105,9 +96,8 @@
     "area": 59425,
     "gdpPerCapita": 59000,
     "coastline": "Atlantic",
-    "medianAge": 37.3,
     "yearOfStatehood": 1788,
-    "landlocked": false
+    "electoralVotes": 16
   },
   {
     "name": "Hawaii",
@@ -116,9 +106,8 @@
     "area": 10932,
     "gdpPerCapita": 63000,
     "coastline": "Pacific",
-    "medianAge": 38.9,
     "yearOfStatehood": 1959,
-    "landlocked": false
+    "electoralVotes": 4
   },
   {
     "name": "Idaho",
@@ -127,9 +116,8 @@
     "area": 83569,
     "gdpPerCapita": 47000,
     "coastline": "None",
-    "medianAge": 36.6,
     "yearOfStatehood": 1890,
-    "landlocked": true
+    "electoralVotes": 4
   },
   {
     "name": "Illinois",
@@ -138,9 +126,8 @@
     "area": 57914,
     "gdpPerCapita": 68000,
     "coastline": "Great Lakes",
-    "medianAge": 38.5,
     "yearOfStatehood": 1818,
-    "landlocked": false
+    "electoralVotes": 19
   },
   {
     "name": "Indiana",
@@ -149,9 +136,8 @@
     "area": 36420,
     "gdpPerCapita": 57000,
     "coastline": "Great Lakes",
-    "medianAge": 37.8,
     "yearOfStatehood": 1816,
-    "landlocked": false
+    "electoralVotes": 11
   },
   {
     "name": "Iowa",
@@ -160,9 +146,8 @@
     "area": 56273,
     "gdpPerCapita": 60000,
     "coastline": "None",
-    "medianAge": 38.2,
     "yearOfStatehood": 1846,
-    "landlocked": true
+    "electoralVotes": 6
   },
   {
     "name": "Kansas",
@@ -171,9 +156,8 @@
     "area": 82278,
     "gdpPerCapita": 58000,
     "coastline": "None",
-    "medianAge": 37.1,
     "yearOfStatehood": 1861,
-    "landlocked": true
+    "electoralVotes": 6
   },
   {
     "name": "Kentucky",
@@ -182,9 +166,8 @@
     "area": 40408,
     "gdpPerCapita": 50000,
     "coastline": "None",
-    "medianAge": 39.2,
     "yearOfStatehood": 1792,
-    "landlocked": true
+    "electoralVotes": 8
   },
   {
     "name": "Louisiana",
@@ -193,9 +176,8 @@
     "area": 52378,
     "gdpPerCapita": 54000,
     "coastline": "Gulf",
-    "medianAge": 37.8,
     "yearOfStatehood": 1812,
-    "landlocked": false
+    "electoralVotes": 8
   },
   {
     "name": "Maine",
@@ -204,20 +186,18 @@
     "area": 35380,
     "gdpPerCapita": 52000,
     "coastline": "Atlantic",
-    "medianAge": 44.9,
     "yearOfStatehood": 1820,
-    "landlocked": false
+    "electoralVotes": 4
   },
   {
     "name": "Maryland",
-    "region": "South",
+    "region": "Northeast",
     "population": 6177224,
     "area": 12406,
     "gdpPerCapita": 73000,
     "coastline": "Atlantic",
-    "medianAge": 39.0,
     "yearOfStatehood": 1788,
-    "landlocked": false
+    "electoralVotes": 10
   },
   {
     "name": "Massachusetts",
@@ -226,9 +206,8 @@
     "area": 10554,
     "gdpPerCapita": 92000,
     "coastline": "Atlantic",
-    "medianAge": 39.5,
     "yearOfStatehood": 1788,
-    "landlocked": false
+    "electoralVotes": 11
   },
   {
     "name": "Michigan",
@@ -237,9 +216,8 @@
     "area": 96714,
     "gdpPerCapita": 56000,
     "coastline": "Great Lakes",
-    "medianAge": 39.8,
     "yearOfStatehood": 1837,
-    "landlocked": false
+    "electoralVotes": 15
   },
   {
     "name": "Minnesota",
@@ -248,9 +226,8 @@
     "area": 86936,
     "gdpPerCapita": 71000,
     "coastline": "Great Lakes",
-    "medianAge": 38.0,
     "yearOfStatehood": 1858,
-    "landlocked": false
+    "electoralVotes": 10
   },
   {
     "name": "Mississippi",
@@ -259,9 +236,8 @@
     "area": 48432,
     "gdpPerCapita": 39000,
     "coastline": "Gulf",
-    "medianAge": 37.9,
     "yearOfStatehood": 1817,
-    "landlocked": false
+    "electoralVotes": 6
   },
   {
     "name": "Missouri",
@@ -270,9 +246,8 @@
     "area": 69707,
     "gdpPerCapita": 55000,
     "coastline": "None",
-    "medianAge": 38.7,
     "yearOfStatehood": 1821,
-    "landlocked": true
+    "electoralVotes": 10
   },
   {
     "name": "Montana",
@@ -281,9 +256,8 @@
     "area": 147040,
     "gdpPerCapita": 51000,
     "coastline": "None",
-    "medianAge": 40.1,
     "yearOfStatehood": 1889,
-    "landlocked": true
+    "electoralVotes": 4
   },
   {
     "name": "Nebraska",
@@ -292,9 +266,8 @@
     "area": 77358,
     "gdpPerCapita": 64000,
     "coastline": "None",
-    "medianAge": 36.9,
     "yearOfStatehood": 1867,
-    "landlocked": true
+    "electoralVotes": 5
   },
   {
     "name": "Nevada",
@@ -303,9 +276,8 @@
     "area": 110572,
     "gdpPerCapita": 56000,
     "coastline": "None",
-    "medianAge": 38.5,
     "yearOfStatehood": 1864,
-    "landlocked": true
+    "electoralVotes": 6
   },
   {
     "name": "New Hampshire",
@@ -314,9 +286,8 @@
     "area": 9349,
     "gdpPerCapita": 72000,
     "coastline": "Atlantic",
-    "medianAge": 43.0,
     "yearOfStatehood": 1788,
-    "landlocked": false
+    "electoralVotes": 4
   },
   {
     "name": "New Jersey",
@@ -325,20 +296,18 @@
     "area": 8723,
     "gdpPerCapita": 78000,
     "coastline": "Atlantic",
-    "medianAge": 40.0,
     "yearOfStatehood": 1787,
-    "landlocked": false
+    "electoralVotes": 14
   },
   {
     "name": "New Mexico",
-    "region": "West",
+    "region": "Southwest",
     "population": 2117522,
     "area": 121590,
     "gdpPerCapita": 48000,
     "coastline": "None",
-    "medianAge": 38.8,
     "yearOfStatehood": 1912,
-    "landlocked": true
+    "electoralVotes": 5
   },
   {
     "name": "New York",
@@ -347,9 +316,8 @@
     "area": 54555,
     "gdpPerCapita": 85000,
     "coastline": "Atlantic",
-    "medianAge": 38.7,
     "yearOfStatehood": 1788,
-    "landlocked": false
+    "electoralVotes": 28
   },
   {
     "name": "North Carolina",
@@ -358,9 +326,8 @@
     "area": 53819,
     "gdpPerCapita": 58000,
     "coastline": "Atlantic",
-    "medianAge": 39.0,
     "yearOfStatehood": 1789,
-    "landlocked": false
+    "electoralVotes": 16
   },
   {
     "name": "North Dakota",
@@ -369,9 +336,8 @@
     "area": 70698,
     "gdpPerCapita": 74000,
     "coastline": "None",
-    "medianAge": 35.2,
     "yearOfStatehood": 1889,
-    "landlocked": true
+    "electoralVotes": 3
   },
   {
     "name": "Ohio",
@@ -380,20 +346,18 @@
     "area": 44826,
     "gdpPerCapita": 59000,
     "coastline": "Great Lakes",
-    "medianAge": 39.4,
     "yearOfStatehood": 1803,
-    "landlocked": false
+    "electoralVotes": 17
   },
   {
     "name": "Oklahoma",
-    "region": "South",
+    "region": "Southwest",
     "population": 3959353,
     "area": 69899,
     "gdpPerCapita": 53000,
     "coastline": "None",
-    "medianAge": 37.0,
     "yearOfStatehood": 1907,
-    "landlocked": true
+    "electoralVotes": 7
   },
   {
     "name": "Oregon",
@@ -402,9 +366,8 @@
     "area": 98379,
     "gdpPerCapita": 63000,
     "coastline": "Pacific",
-    "medianAge": 39.8,
     "yearOfStatehood": 1859,
-    "landlocked": false
+    "electoralVotes": 8
   },
   {
     "name": "Pennsylvania",
@@ -413,9 +376,8 @@
     "area": 46054,
     "gdpPerCapita": 67000,
     "coastline": "Great Lakes",
-    "medianAge": 40.7,
     "yearOfStatehood": 1787,
-    "landlocked": false
+    "electoralVotes": 19
   },
   {
     "name": "Rhode Island",
@@ -424,9 +386,8 @@
     "area": 1545,
     "gdpPerCapita": 61000,
     "coastline": "Atlantic",
-    "medianAge": 40.2,
     "yearOfStatehood": 1790,
-    "landlocked": false
+    "electoralVotes": 4
   },
   {
     "name": "South Carolina",
@@ -435,9 +396,8 @@
     "area": 32020,
     "gdpPerCapita": 50000,
     "coastline": "Atlantic",
-    "medianAge": 39.9,
     "yearOfStatehood": 1788,
-    "landlocked": false
+    "electoralVotes": 9
   },
   {
     "name": "South Dakota",
@@ -446,9 +406,8 @@
     "area": 77116,
     "gdpPerCapita": 65000,
     "coastline": "None",
-    "medianAge": 37.0,
     "yearOfStatehood": 1889,
-    "landlocked": true
+    "electoralVotes": 3
   },
   {
     "name": "Tennessee",
@@ -457,20 +416,18 @@
     "area": 42144,
     "gdpPerCapita": 57000,
     "coastline": "None",
-    "medianAge": 39.0,
     "yearOfStatehood": 1796,
-    "landlocked": true
+    "electoralVotes": 11
   },
   {
     "name": "Texas",
-    "region": "South",
+    "region": "Southwest",
     "population": 29145505,
     "area": 268596,
     "gdpPerCapita": 63600,
     "coastline": "Gulf",
-    "medianAge": 35.5,
     "yearOfStatehood": 1845,
-    "landlocked": false
+    "electoralVotes": 40
   },
   {
     "name": "Utah",
@@ -479,9 +436,8 @@
     "area": 84897,
     "gdpPerCapita": 60000,
     "coastline": "None",
-    "medianAge": 31.3,
     "yearOfStatehood": 1896,
-    "landlocked": true
+    "electoralVotes": 6
   },
   {
     "name": "Vermont",
@@ -490,9 +446,8 @@
     "area": 9616,
     "gdpPerCapita": 56000,
     "coastline": "None",
-    "medianAge": 43.0,
     "yearOfStatehood": 1791,
-    "landlocked": true
+    "electoralVotes": 3
   },
   {
     "name": "Virginia",
@@ -501,9 +456,8 @@
     "area": 42775,
     "gdpPerCapita": 72000,
     "coastline": "Atlantic",
-    "medianAge": 38.5,
     "yearOfStatehood": 1788,
-    "landlocked": false
+    "electoralVotes": 13
   },
   {
     "name": "Washington",
@@ -512,9 +466,8 @@
     "area": 71298,
     "gdpPerCapita": 82000,
     "coastline": "Pacific",
-    "medianAge": 37.8,
     "yearOfStatehood": 1889,
-    "landlocked": false
+    "electoralVotes": 12
   },
   {
     "name": "West Virginia",
@@ -523,9 +476,8 @@
     "area": 24230,
     "gdpPerCapita": 44000,
     "coastline": "None",
-    "medianAge": 42.9,
     "yearOfStatehood": 1863,
-    "landlocked": true
+    "electoralVotes": 4
   },
   {
     "name": "Wisconsin",
@@ -534,9 +486,8 @@
     "area": 65496,
     "gdpPerCapita": 60000,
     "coastline": "Great Lakes",
-    "medianAge": 39.7,
     "yearOfStatehood": 1848,
-    "landlocked": false
+    "electoralVotes": 10
   },
   {
     "name": "Wyoming",
@@ -545,8 +496,7 @@
     "area": 97813,
     "gdpPerCapita": 70176,
     "coastline": "None",
-    "medianAge": 38.5,
     "yearOfStatehood": 1890,
-    "landlocked": true
+    "electoralVotes": 3
   }
 ]

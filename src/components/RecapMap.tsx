@@ -58,8 +58,9 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+    const containerEl = container;
 
-    const svg = container.querySelector("svg");
+    const svg = containerEl.querySelector("svg");
     if (!svg) return;
 
     svg.querySelectorAll("title").forEach((node) => node.remove());
@@ -76,7 +77,7 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
     }
 
     function getTooltipPoint(clientX: number, clientY: number, yOffset: number) {
-      const rect = container.getBoundingClientRect();
+      const rect = containerEl.getBoundingClientRect();
       const tooltipWidth = tooltipRef.current?.offsetWidth ?? 140;
       const tooltipHeight = tooltipRef.current?.offsetHeight ?? 36;
       const unclampedX = clientX - rect.left + TOOLTIP_OFFSET_X;
@@ -128,12 +129,12 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
     }
 
     function handleDocumentPointerDown(event: PointerEvent) {
-      if (!container.contains(event.target as Node)) {
+      if (!containerEl.contains(event.target as Node)) {
         setTooltip(null);
       }
     }
 
-    const stateElements = Array.from(container.querySelectorAll("[data-name]"));
+    const stateElements = Array.from(containerEl.querySelectorAll("[data-name]"));
     stateElements.forEach((element) => {
       element.addEventListener("pointerenter", handlePointerEnter);
       element.addEventListener("pointermove", handlePointerMove);
@@ -158,7 +159,9 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
 
   return (
     <div ref={containerRef} className="relative mt-4 flex w-full max-w-4xl flex-col items-center">
-      <p className="text-md text-stone-900 text-center">Your guesses</p>
+      <p className="rounded-md border border-stone-800/30 bg-stone-950/20 px-4 py-1 text-center text-md text-stone-950 backdrop-blur-[1px]">
+        Your guesses
+      </p>
       <div className="w-full overflow-hidden">
         <USAMap customize={customize} defaultFill="#262322" width={width} height={height} />
       </div>

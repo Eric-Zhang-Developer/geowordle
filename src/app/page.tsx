@@ -7,15 +7,28 @@ import { GuessTable } from "../components/GuessTable";
 import { RecapMap } from "../components/RecapMap";
 import { StateSearch } from "../components/StateSearch";
 import { VictoryConfetti } from "../components/VictoryConfetti";
+import { RoundStatus } from "../lib/gameRules";
 
-const SHARE_KEYS = ['region', 'population', 'area', 'gdpPerCapita', 'coastline', 'medianAge', 'yearOfStatehood', 'landlocked'] as const;
-const EMOJI: Record<string, string> = { correct: '🟩', close: '🟨', incorrect: '🟥' };
+const SHARE_KEYS = [
+  "region",
+  "population",
+  "area",
+  "density",
+  "electoralVotes",
+  "gdpPerCapita",
+  "coastline",
+  "yearOfStatehood",
+] as const;
+const EMOJI: Record<string, string> = { correct: "🟩", close: "🟨", incorrect: "🟥" };
 
 function generateShareString(guesses: GuessResult[], mode: string, round: number): string {
-  const header = mode === 'daily'
-    ? `Geodle (Daily) - ${guesses.length} Guesses`
-    : `Geodle (Endless R${round}) - ${guesses.length} Guesses`;
-  const rows = guesses.map(g => SHARE_KEYS.map(k => EMOJI[g.cells[k].state]).join('')).join('\n');
+  const header =
+    mode === "daily"
+      ? `Statle (Daily) - ${guesses.length} Guesses`
+      : `Statle (Endless R${round}) - ${guesses.length} Guesses`;
+  const rows = guesses
+    .map((g) => SHARE_KEYS.map((k) => EMOJI[g.cells[k].state]).join(""))
+    .join("\n");
   return `${header}\n\n${rows}`;
 }
 
@@ -29,8 +42,10 @@ export default function Home() {
     selected,
     setSelected,
     submitGuess,
-    isWon,
+    status,
     remaining,
+    targetName,
+    maxGuesses,
     switchToEndless,
     nextRound,
   } = useGame();
@@ -40,19 +55,20 @@ export default function Home() {
   const recapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!isWon) return;
-
+    if (status !== "won") return;
     const timer = window.setTimeout(() => {
       setIsVictoryRevealed(true);
       new Audio("/sounds/victory.mp3").play().catch(() => {});
     }, VICTORY_REVEAL_DELAY_MS);
     return () => window.clearTimeout(timer);
-  }, [isWon]);
+  }, [status]);
+
+  const isTerminalRevealed = status === "lost" || (status === "won" && isVictoryRevealed);
 
   useEffect(() => {
-    if (!isVictoryRevealed) return;
+    if (!isTerminalRevealed) return;
     recapRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [isVictoryRevealed]);
+  }, [isTerminalRevealed]);
 
   function handleSwitchToEndless() {
     setIsVictoryRevealed(false);
@@ -70,79 +86,119 @@ export default function Home() {
     window.setTimeout(() => setCopied(false), 2000);
   }
 
-  return (
-    <main className="w-full overflow-x-hidden px-3 pt-6 pb-2 sm:px-8 sm:pt-8 sm:pb-2">
-      <VictoryConfetti active={isVictoryRevealed} />
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
-        <div className="mb-8 flex flex-col items-center gap-2">
-        <h1 className="font-rye text-4xl tracking-wide text-stone-900">Geodle</h1>
-        {mode === "daily" ? (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-amber-100 border border-stone-700">
-            Daily
-          </span>
-        ) : (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-purple-200 border border-stone-700">
-            Endless · Round {round}
-          </span>
-        )}
-        </div>
-      <div className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-stone-900">
-        <span className="flex items-center gap-1 whitespace-nowrap">
-          <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
-          Correct
-        </span>
-        <span className="flex items-center gap-1 whitespace-nowrap">
-          <span className="inline-block w-3 h-3 rounded-sm bg-red-700" />
-          Wrong
-        </span>
-        <span className="flex items-center gap-1 whitespace-nowrap">
-          <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
-          Close
-        </span>
-        <span className="text-center text-stone-700">▲▼ = too low / too high</span>
-      </div>
+  const isWon = status === "won";
+  const isLost = status === "lost";
 
-      <StateSearch
-        value={selected}
-        remaining={remaining}
-        onChange={setSelected}
-        onSubmit={submitGuess}
-        disabled={isWon}
-      />
-      <div className="bg-stone-900/70 backdrop-blur-sm rounded-2xl p-3">
-        <GuessTable guesses={guesses} />
-      </div>
-      <RecapMap guesses={guesses} />
-      {isWon && isVictoryRevealed && (
-        <div ref={recapRef} className="mt-6 mb-2 flex flex-col items-center gap-4 bg-stone-900/75 backdrop-blur-sm rounded-2xl px-8 py-6 text-center">
-          <p className="text-green-400 text-3xl font-bold drop-shadow-lg">
+  function renderTerminalPanel(roundStatus: RoundStatus) {
+    if (!isTerminalRevealed) return null;
+
+    if (roundStatus === "won") {
+      return (
+        <div
+          ref={recapRef}
+          className="mt-6 mb-2 flex flex-col items-center gap-4 rounded-2xl bg-stone-900/75 px-8 py-6 text-center backdrop-blur-sm"
+        >
+          <p className="text-3xl font-bold text-green-400 drop-shadow-lg">
             Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
           </p>
           <div className="flex justify-center gap-4">
             <button
               onClick={handleShare}
-              className="px-8 py-3 text-lg font-semibold bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
+              className="cursor-pointer rounded bg-blue-500 px-8 py-3 text-lg font-semibold text-white hover:bg-blue-600"
             >
               {copied ? "Copied!" : "Share"}
             </button>
             {mode === "daily" ? (
               <button
                 onClick={handleSwitchToEndless}
-                className="px-8 py-3 text-lg font-semibold bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+                className="cursor-pointer rounded bg-purple-500 px-8 py-3 text-lg font-semibold text-white hover:bg-purple-600"
               >
                 Try Endless Mode
               </button>
             ) : (
               <button
                 onClick={handleNextRound}
-                className="px-8 py-3 text-lg font-semibold bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+                className="cursor-pointer rounded bg-purple-500 px-8 py-3 text-lg font-semibold text-white hover:bg-purple-600"
               >
                 Next Round
               </button>
             )}
           </div>
         </div>
-      )}
+      );
+    }
+
+    return (
+      <div
+        ref={recapRef}
+        className="mt-6 mb-2 flex flex-col items-center gap-4 rounded-2xl bg-stone-900/75 px-8 py-6 text-center backdrop-blur-sm"
+      >
+        <p className="text-3xl font-bold text-red-400 drop-shadow-lg">
+          The correct state was {targetName}.
+        </p>
+        {mode === "daily" ? (
+          <button
+            onClick={handleSwitchToEndless}
+            className="cursor-pointer rounded bg-purple-500 px-8 py-3 text-lg font-semibold text-white hover:bg-purple-600"
+          >
+            Try Endless Mode
+          </button>
+        ) : (
+          <button
+            onClick={handleNextRound}
+            className="cursor-pointer rounded bg-purple-500 px-8 py-3 text-lg font-semibold text-white hover:bg-purple-600"
+          >
+            Next Round
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <main className="w-full overflow-x-hidden px-3 pt-6 pb-2 sm:px-8 sm:pt-8 sm:pb-2">
+      <VictoryConfetti active={isWon && isTerminalRevealed} />
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
+        <div className="mb-8 flex flex-col items-center gap-2">
+          <h1 className="font-rye text-5xl tracking-wide text-stone-900">Statle</h1>
+          {mode === "daily" ? (
+            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-amber-100 border border-stone-700">
+              Daily
+            </span>
+          ) : (
+            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-purple-200 border border-stone-700">
+              Endless · Round {round}
+            </span>
+          )}
+        </div>
+        <div className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-stone-900">
+          <span className="flex items-center gap-1 whitespace-nowrap">
+            <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
+            Correct
+          </span>
+          <span className="flex items-center gap-1 whitespace-nowrap">
+            <span className="inline-block w-3 h-3 rounded-sm bg-red-700" />
+            Wrong
+          </span>
+          <span className="flex items-center gap-1 whitespace-nowrap">
+            <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
+            Close
+          </span>
+          <span className="text-center text-stone-700">▲▼ = too low / too high</span>
+        </div>
+
+        <StateSearch
+          value={selected}
+          remaining={remaining}
+          onChange={setSelected}
+          onSubmit={submitGuess}
+          disabled={status !== "playing"}
+        />
+        <div className="rounded-2xl bg-stone-900/70 p-3 pb-2 backdrop-blur-sm">
+          <GuessTable guesses={guesses} maxRows={maxGuesses} />
+        </div>
+        <RecapMap guesses={guesses} />
+        {(isWon || isLost) && renderTerminalPanel(status)}
       </div>
     </main>
   );

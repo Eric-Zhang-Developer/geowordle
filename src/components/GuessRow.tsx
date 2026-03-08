@@ -10,7 +10,18 @@ function statePicSrc(name: string) {
   return `/${STATE_PICS}/${slug}.png`;
 }
 
-type ColDef = { key: keyof Omit<State, "name">; fmt: (s: State) => string };
+type ColDef = {
+  key:
+    | "region"
+    | "population"
+    | "area"
+    | "density"
+    | "electoralVotes"
+    | "gdpPerCapita"
+    | "coastline"
+    | "yearOfStatehood";
+  fmt: (s: State) => string;
+};
 
 interface GuessRowProps {
   guess: GuessResult;
@@ -21,6 +32,8 @@ interface GuessRowProps {
 }
 
 const STAGGER_MS = 300;
+const BASE_CELL_CLASS =
+  "relative h-20 overflow-hidden rounded text-center align-middle text-xs font-semibold sm:h-24 sm:text-sm";
 
 export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps) {
   const total = columns.length + 1; // +1 for name cell
@@ -38,9 +51,6 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
     return () => timers.forEach(clearTimeout);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const base =
-    "relative h-20 overflow-hidden rounded text-center align-middle text-xs font-semibold sm:h-24 sm:text-sm";
-
   // name cell: active once revealed >= 1
   const nameActive = revealed >= 1;
   const nameFlipping = revealed === 1;
@@ -48,7 +58,7 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
   return (
     <tr>
       <td
-        className={`${base} min-w-[132px] px-0 font-bold text-amber-50 sm:min-w-[180px]
+        className={`${BASE_CELL_CLASS} min-w-[132px] px-0 font-bold text-amber-50 sm:min-w-[180px]
         ${nameActive ? "bg-amber-950" : "bg-stone-700"}`}
       >
         {nameActive && (
@@ -75,13 +85,24 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
         return (
           <td
             key={col.key}
-            className={`${base} w-[88px] text-white sm:w-24 ${isActive ? bg[cell.state] : "bg-stone-700"}`}
+            className={`${BASE_CELL_CLASS} w-[88px] text-white sm:w-24 ${isActive ? bg[cell.state] : "bg-stone-700"}`}
           >
             {isActive && `${col.fmt(guess.state)}${cell.direction ? indicator[cell.direction] : ""}`}
             {isFlipping && <span className="absolute inset-0 bg-stone-700 rounded animate-cell-uncover origin-right" />}
           </td>
         );
       })}
+    </tr>
+  );
+}
+
+export function PlaceholderGuessRow({ columns }: { columns: ColDef[] }) {
+  return (
+    <tr>
+      <td className={`${BASE_CELL_CLASS} min-w-[132px] bg-stone-700 sm:min-w-[180px]`} />
+      {columns.map((col) => (
+        <td key={col.key} className={`${BASE_CELL_CLASS} w-[88px] bg-stone-700 sm:w-24`} />
+      ))}
     </tr>
   );
 }
