@@ -49,8 +49,8 @@ export default function Home() {
 
   return (
     <main className="p-8 font-mono flex flex-col items-center">
-      <div className="flex items-center gap-2 mb-1">
-        <h1 className="text-2xl font-bold">GeoWordle</h1>
+      <div className="flex flex-col items-center gap-2 mb-8">
+        <h1 className="text-3xl font-bold">Geodle</h1>
         {mode === "daily" ? (
           <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-900 text-blue-300 border border-blue-700">
             Daily
