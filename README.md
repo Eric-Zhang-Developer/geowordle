@@ -26,7 +26,7 @@
 </p>
 
 <p align="center">
-  <a href="https://geodlegame.vercel.app"><img src="https://img.shields.io/badge/-🗺️%20Play%20Now!-brightgreen?style=for-the-badge" alt="Play Now" /></a>
+  <a href="https://statle.vercel.app"><img src="https://img.shields.io/badge/-🗺️%20Play%20Now!-brightgreen?style=for-the-badge" alt="Play Now" /></a>
 </p>
 
 <!-- TODO: Add screenshot or demo GIF here -->
