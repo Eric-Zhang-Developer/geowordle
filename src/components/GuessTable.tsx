@@ -1,5 +1,5 @@
 import { CellDirection, CellState, GuessResult, State } from "../lib/gameLogic";
-import { GuessRow } from "./GuessRow";
+import { GuessRow, PlaceholderGuessRow } from "./GuessRow";
 
 type Column = keyof Omit<State, "name">;
 
@@ -42,7 +42,9 @@ const INDICATOR: Record<CellDirection, string> = {
   lower: " ▼",
 };
 
-export function GuessTable({ guesses }: { guesses: GuessResult[] }) {
+export function GuessTable({ guesses, maxRows }: { guesses: GuessResult[]; maxRows: number }) {
+  const placeholderCount = Math.max(0, maxRows - guesses.length);
+
   return (
     <div className="mb-10 w-full max-w-full">
       <p className="mb-2 pr-1 text-right text-[11px] text-stone-500 sm:hidden">
@@ -75,6 +77,9 @@ export function GuessTable({ guesses }: { guesses: GuessResult[] }) {
                 bg={BG}
                 indicator={INDICATOR}
               />
+            ))}
+            {Array.from({ length: placeholderCount }, (_, i) => (
+              <PlaceholderGuessRow key={`placeholder-${i}`} columns={COLUMNS} />
             ))}
           </tbody>
         </table>
