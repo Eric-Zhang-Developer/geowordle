@@ -12,6 +12,7 @@ interface StateSearchProps {
   remaining: State[];
   onChange: (value: string) => void;
   onSubmit: (name: string) => void;
+  disabled?: boolean;
 }
 
 function stateImagePath(name: string, ext: string) {
@@ -50,7 +51,7 @@ function StateThumb({ name }: { name: string }) {
   );
 }
 
-export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearchProps) {
+export function StateSearch({ value, remaining, onChange, onSubmit, disabled }: StateSearchProps) {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const query = value.trim().toLowerCase();
   const suggestions =
@@ -70,9 +71,9 @@ export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearc
   const ghostText = ghostMatch ? value + ghostMatch.name.slice(value.length) : "";
 
   return (
-    <div className="relative w-full max-w-sm mb-6">
+    <div className={`relative w-full max-w-sm mb-6 ${disabled ? "opacity-50 pointer-events-none" : ""}`}>
       {/* Ghost suggestion layer (behind) */}
-      <div className="w-full px-3 py-2 text-base text-gray-600 pointer-events-none whitespace-nowrap overflow-hidden select-none border border-transparent rounded" aria-hidden="true">
+      <div className="w-full px-3 py-2 text-base text-stone-400 pointer-events-none whitespace-nowrap overflow-hidden select-none border border-transparent rounded" aria-hidden="true">
         {ghostText || "\u00A0"}
       </div>
       <input
@@ -101,10 +102,10 @@ export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearc
             }
           }
         }}
-        className="absolute inset-0 w-full px-3 py-2 text-base bg-transparent text-white border border-gray-600 rounded outline-none placeholder-gray-500 focus:border-blue-400"
+        className="absolute inset-0 w-full px-3 py-2 text-base bg-white/30 text-stone-900 border border-stone-600 rounded outline-none placeholder-stone-500 focus:border-stone-900"
       />
       {isPickerOpen && suggestions.length > 0 && (
-        <div className="absolute z-10 mt-1 w-full max-h-80 overflow-y-auto bg-gray-900 border border-gray-700 rounded shadow-lg">
+        <div className="absolute z-10 mt-1 w-full max-h-80 overflow-y-auto bg-stone-900 border border-stone-700 rounded shadow-lg">
           {suggestions.map((s) => (
             <button
               key={s.name}
@@ -114,7 +115,7 @@ export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearc
                 onSubmit(s.name);
                 setIsPickerOpen(false);
               }}
-              className="w-full flex items-center gap-3 px-4 py-3 text-left text-base hover:bg-gray-800 cursor-pointer"
+              className="w-full flex items-center gap-3 px-4 py-3 text-left text-base text-white hover:bg-stone-800 cursor-pointer"
             >
               <StateThumb name={s.name} />
               <span>{s.name}</span>

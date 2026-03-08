@@ -68,22 +68,22 @@ export default function Home() {
   }
 
   return (
-    <main className="w-full overflow-x-hidden px-3 py-6 font-mono sm:px-8 sm:py-8">
+    <main className="w-full overflow-x-hidden px-3 pt-6 pb-2 sm:px-8 sm:pt-8 sm:pb-2">
       <VictoryConfetti active={isVictoryRevealed} />
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
         <div className="mb-8 flex flex-col items-center gap-2">
-        <h1 className="text-3xl font-bold">Geodle</h1>
+        <h1 className="font-rye text-4xl tracking-wide text-stone-900">Geodle</h1>
         {mode === "daily" ? (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-900 text-blue-300 border border-blue-700">
+          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-amber-100 border border-stone-700">
             Daily
           </span>
         ) : (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-purple-900 text-purple-300 border border-purple-700">
+          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-purple-200 border border-stone-700">
             Endless · Round {round}
           </span>
         )}
         </div>
-      <div className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-gray-400">
+      <div className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-stone-900">
         <span className="flex items-center gap-1 whitespace-nowrap">
           <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
           Correct
@@ -96,52 +96,48 @@ export default function Home() {
           <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
           Close
         </span>
-        <span className="text-center text-gray-500">▲▼ = too low / too high</span>
+        <span className="text-center text-stone-700">▲▼ = too low / too high</span>
       </div>
 
-      {isWon ? (
-        isVictoryRevealed ? (
-          <div className="mb-6 space-y-3 text-center">
-            <p className="text-green-400 text-xl font-bold">
-              Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
-            </p>
-            <div className="flex justify-center gap-3">
-              {mode === "daily" ? (
-                <button
-                  onClick={handleSwitchToEndless}
-                  className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
-                >
-                  Try Endless Mode
-                </button>
-              ) : (
-                <button
-                  onClick={handleNextRound}
-                  className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
-                >
-                  Next Round
-                </button>
-              )}
-              <button
-                onClick={handleShare}
-                className="px-5 py-2 text-base bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
-              >
-                {copied ? "Copied!" : "Share"}
-              </button>
-            </div>
-          </div>
-        ) : null
-      ) : (
-        <StateSearch
-          value={selected}
-          remaining={remaining}
-          onChange={setSelected}
-          onSubmit={submitGuess}
-        />
-      )}
-      <GuessTable guesses={guesses} />
+      <StateSearch
+        value={selected}
+        remaining={remaining}
+        onChange={setSelected}
+        onSubmit={submitGuess}
+        disabled={isWon}
+      />
+      <div className="bg-stone-900/70 backdrop-blur-sm rounded-2xl p-3">
+        <GuessTable guesses={guesses} />
+      </div>
+      <RecapMap guesses={guesses} />
       {isWon && isVictoryRevealed && (
-        <div ref={recapRef}>
-          <RecapMap guesses={guesses} />
+        <div ref={recapRef} className="mt-6 mb-2 flex flex-col items-center gap-4 bg-stone-900/75 backdrop-blur-sm rounded-2xl px-8 py-6 text-center">
+          <p className="text-green-400 text-3xl font-bold drop-shadow-lg">
+            Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
+          </p>
+          <div className="flex justify-center gap-4">
+            <button
+              onClick={handleShare}
+              className="px-8 py-3 text-lg font-semibold bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
+            >
+              {copied ? "Copied!" : "Share"}
+            </button>
+            {mode === "daily" ? (
+              <button
+                onClick={handleSwitchToEndless}
+                className="px-8 py-3 text-lg font-semibold bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+              >
+                Try Endless Mode
+              </button>
+            ) : (
+              <button
+                onClick={handleNextRound}
+                className="px-8 py-3 text-lg font-semibold bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+              >
+                Next Round
+              </button>
+            )}
+          </div>
         </div>
       )}
       </div>
