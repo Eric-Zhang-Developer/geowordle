@@ -72,18 +72,18 @@ export default function Home() {
       <VictoryConfetti active={isVictoryRevealed} />
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
         <div className="mb-8 flex flex-col items-center gap-2">
-        <h1 className="font-rye text-4xl tracking-wide">Geodle</h1>
+        <h1 className="font-rye text-4xl tracking-wide text-stone-900">Geodle</h1>
         {mode === "daily" ? (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 border border-blue-300">
+          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-amber-100 border border-stone-700">
             Daily
           </span>
         ) : (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-purple-100 text-purple-800 border border-purple-300">
+          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-purple-200 border border-stone-700">
             Endless · Round {round}
           </span>
         )}
         </div>
-      <div className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-stone-600">
+      <div className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-stone-900">
         <span className="flex items-center gap-1 whitespace-nowrap">
           <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
           Correct
@@ -96,7 +96,7 @@ export default function Home() {
           <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
           Close
         </span>
-        <span className="text-center text-stone-500">▲▼ = too low / too high</span>
+        <span className="text-center text-stone-700">▲▼ = too low / too high</span>
       </div>
 
       {isWon ? (
@@ -138,7 +138,9 @@ export default function Home() {
           onSubmit={submitGuess}
         />
       )}
-      <GuessTable guesses={guesses} />
+      <div className="bg-stone-900/70 backdrop-blur-sm rounded-2xl p-3">
+        <GuessTable guesses={guesses} />
+      </div>
       {isWon && isVictoryRevealed && (
         <div ref={recapRef}>
           <RecapMap guesses={guesses} />

@@ -101,10 +101,10 @@ export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearc
             }
           }
         }}
-        className="absolute inset-0 w-full px-3 py-2 text-base bg-transparent text-stone-900 border border-stone-400 rounded outline-none placeholder-stone-400 focus:border-amber-700"
+        className="absolute inset-0 w-full px-3 py-2 text-base bg-white/30 text-stone-900 border border-stone-600 rounded outline-none placeholder-stone-500 focus:border-stone-900"
       />
       {isPickerOpen && suggestions.length > 0 && (
-        <div className="absolute z-10 mt-1 w-full max-h-80 overflow-y-auto bg-amber-50 border border-stone-300 rounded shadow-lg">
+        <div className="absolute z-10 mt-1 w-full max-h-80 overflow-y-auto bg-stone-900 border border-stone-700 rounded shadow-lg">
           {suggestions.map((s) => (
             <button
               key={s.name}
@@ -114,7 +114,7 @@ export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearc
                 onSubmit(s.name);
                 setIsPickerOpen(false);
               }}
-              className="w-full flex items-center gap-3 px-4 py-3 text-left text-base text-stone-900 hover:bg-amber-100 cursor-pointer"
+              className="w-full flex items-center gap-3 px-4 py-3 text-left text-base text-white hover:bg-stone-800 cursor-pointer"
             >
               <StateThumb name={s.name} />
               <span>{s.name}</span>
