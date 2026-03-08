@@ -5,6 +5,7 @@ import { useGame } from "../hooks/useGame";
 import { GuessTable } from "../components/GuessTable";
 import { RecapMap } from "../components/RecapMap";
 import { StateSearch } from "../components/StateSearch";
+import { VictoryConfetti } from "../components/VictoryConfetti";
 
 const VICTORY_REVEAL_DELAY_MS = 2500;
 
@@ -49,6 +50,7 @@ export default function Home() {
 
   return (
     <main className="p-8 font-mono flex flex-col items-center">
+      <VictoryConfetti active={isVictoryRevealed} />
       <div className="flex flex-col items-center gap-2 mb-8">
         <h1 className="text-3xl font-bold">Geodle</h1>
         {mode === "daily" ? (
