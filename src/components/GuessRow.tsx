@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CellDirection, CellState, GuessResult, State } from "../lib/gameLogic";
 
@@ -35,7 +36,7 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const base =
-    "text-sm font-semibold text-center align-middle rounded h-24 relative overflow-hidden";
+    "relative h-20 overflow-hidden rounded text-center align-middle text-xs font-semibold sm:h-24 sm:text-sm";
 
   // name cell: active once revealed >= 1
   const nameActive = revealed >= 1;
@@ -44,21 +45,23 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
   return (
     <tr>
       <td
-        className={`${base} font-bold text-white min-w-[180px] px-0
+        className={`${base} min-w-[132px] px-0 font-bold text-white sm:min-w-[180px]
         ${nameActive ? "bg-gray-900" : "bg-gray-700"}`}
       >
         {nameActive && (
-          <div className="flex items-center gap-3 h-full w-full px-3">
-            <img
+          <div className="flex h-full w-full items-center gap-2 px-2 sm:gap-3 sm:px-3">
+            <Image
               src={statePicSrc(guess.state.name)}
               alt=""
-              className="w-14 h-14 object-contain flex-shrink-0"
+              width={56}
+              height={56}
+              sizes="(max-width: 640px) 40px, 56px"
+              className="h-10 w-10 flex-shrink-0 object-contain sm:h-14 sm:w-14"
+              unoptimized
             />
-            <span className="flex-1 text-left truncate">{guess.state.name}</span>
+            <span className="flex-1 truncate text-left">{guess.state.name}</span>
           </div>
         )}
-        {nameFlipping && <span className="absolute inset-0 bg-gray-700 rounded cell-uncover" />}
-        {nameActive && guess.state.name}
         {nameFlipping && <span className="absolute inset-0 bg-gray-700 rounded animate-cell-uncover origin-right" />}
       </td>
       {columns.map((col, i) => {
@@ -69,7 +72,7 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
         return (
           <td
             key={col.key}
-            className={`${base} text-white w-24 ${isActive ? bg[cell.state] : "bg-gray-700"}`}
+            className={`${base} w-[88px] text-white sm:w-24 ${isActive ? bg[cell.state] : "bg-gray-700"}`}
           >
             {isActive && `${col.fmt(guess.state)}${cell.direction ? indicator[cell.direction] : ""}`}
             {isFlipping && <span className="absolute inset-0 bg-gray-700 rounded animate-cell-uncover origin-right" />}
