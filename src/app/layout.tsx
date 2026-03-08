@@ -8,6 +8,7 @@ const specialElite = Special_Elite({ subsets: ["latin"], weight: "400", variable
 export const metadata: Metadata = {
   title: "Statle",
   description: "Guess the US state from statistical clues",
+  icons: { icon: "/state-pics/Favicon.png" },
 };
 
 export default function RootLayout({
