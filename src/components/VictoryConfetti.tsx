@@ -61,7 +61,7 @@ export function VictoryConfetti({ active }: VictoryConfettiProps) {
     <Confetti
       width={width}
       height={height}
-      numberOfPieces={220}
+      numberOfPieces={500}
       recycle={false}
       gravity={0.22}
       tweenDuration={12000}
