@@ -9,14 +9,26 @@ import { StateSearch } from "../components/StateSearch";
 import { VictoryConfetti } from "../components/VictoryConfetti";
 import { RoundStatus } from "../lib/gameRules";
 
-const SHARE_KEYS = ['region', 'population', 'area', 'density', 'electoralVotes', 'gdpPerCapita', 'coastline', 'yearOfStatehood'] as const;
-const EMOJI: Record<string, string> = { correct: '🟩', close: '🟨', incorrect: '🟥' };
+const SHARE_KEYS = [
+  "region",
+  "population",
+  "area",
+  "density",
+  "electoralVotes",
+  "gdpPerCapita",
+  "coastline",
+  "yearOfStatehood",
+] as const;
+const EMOJI: Record<string, string> = { correct: "🟩", close: "🟨", incorrect: "🟥" };
 
 function generateShareString(guesses: GuessResult[], mode: string, round: number): string {
-  const header = mode === 'daily'
-    ? `Statle (Daily) - ${guesses.length} Guesses`
-    : `Statle (Endless R${round}) - ${guesses.length} Guesses`;
-  const rows = guesses.map(g => SHARE_KEYS.map(k => EMOJI[g.cells[k].state]).join('')).join('\n');
+  const header =
+    mode === "daily"
+      ? `Statle (Daily) - ${guesses.length} Guesses`
+      : `Statle (Endless R${round}) - ${guesses.length} Guesses`;
+  const rows = guesses
+    .map((g) => SHARE_KEYS.map((k) => EMOJI[g.cells[k].state]).join(""))
+    .join("\n");
   return `${header}\n\n${rows}`;
 }
 
@@ -82,7 +94,10 @@ export default function Home() {
 
     if (roundStatus === "won") {
       return (
-        <div ref={recapRef} className="mt-6 mb-2 flex flex-col items-center gap-4 rounded-2xl bg-stone-900/75 px-8 py-6 text-center backdrop-blur-sm">
+        <div
+          ref={recapRef}
+          className="mt-6 mb-2 flex flex-col items-center gap-4 rounded-2xl bg-stone-900/75 px-8 py-6 text-center backdrop-blur-sm"
+        >
           <p className="text-3xl font-bold text-green-400 drop-shadow-lg">
             Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
           </p>
@@ -114,7 +129,10 @@ export default function Home() {
     }
 
     return (
-      <div ref={recapRef} className="mt-6 mb-2 flex flex-col items-center gap-4 rounded-2xl bg-stone-900/75 px-8 py-6 text-center backdrop-blur-sm">
+      <div
+        ref={recapRef}
+        className="mt-6 mb-2 flex flex-col items-center gap-4 rounded-2xl bg-stone-900/75 px-8 py-6 text-center backdrop-blur-sm"
+      >
         <p className="text-3xl font-bold text-red-400 drop-shadow-lg">
           The correct state was {targetName}.
         </p>
@@ -142,45 +160,45 @@ export default function Home() {
       <VictoryConfetti active={isWon && isTerminalRevealed} />
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
         <div className="mb-8 flex flex-col items-center gap-2">
-        <h1 className="font-rye text-4xl tracking-wide text-stone-900">Statle</h1>
-        {mode === "daily" ? (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-amber-100 border border-stone-700">
-            Daily
-          </span>
-        ) : (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-purple-200 border border-stone-700">
-            Endless · Round {round}
-          </span>
-        )}
+          <h1 className="font-rye text-5xl tracking-wide text-stone-900">Statle</h1>
+          {mode === "daily" ? (
+            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-amber-100 border border-stone-700">
+              Daily
+            </span>
+          ) : (
+            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-purple-200 border border-stone-700">
+              Endless · Round {round}
+            </span>
+          )}
         </div>
-      <div className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-stone-900">
-        <span className="flex items-center gap-1 whitespace-nowrap">
-          <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
-          Correct
-        </span>
-        <span className="flex items-center gap-1 whitespace-nowrap">
-          <span className="inline-block w-3 h-3 rounded-sm bg-red-700" />
-          Wrong
-        </span>
-        <span className="flex items-center gap-1 whitespace-nowrap">
-          <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
-          Close
-        </span>
-        <span className="text-center text-stone-700">▲▼ = too low / too high</span>
-      </div>
+        <div className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-stone-900">
+          <span className="flex items-center gap-1 whitespace-nowrap">
+            <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
+            Correct
+          </span>
+          <span className="flex items-center gap-1 whitespace-nowrap">
+            <span className="inline-block w-3 h-3 rounded-sm bg-red-700" />
+            Wrong
+          </span>
+          <span className="flex items-center gap-1 whitespace-nowrap">
+            <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
+            Close
+          </span>
+          <span className="text-center text-stone-700">▲▼ = too low / too high</span>
+        </div>
 
-      <StateSearch
-        value={selected}
-        remaining={remaining}
-        onChange={setSelected}
-        onSubmit={submitGuess}
-        disabled={status !== "playing"}
-      />
-      <div className="rounded-2xl bg-stone-900/70 p-3 pb-2 backdrop-blur-sm">
-        <GuessTable guesses={guesses} maxRows={maxGuesses} />
-      </div>
-      <RecapMap guesses={guesses} />
-      {(isWon || isLost) && renderTerminalPanel(status)}
+        <StateSearch
+          value={selected}
+          remaining={remaining}
+          onChange={setSelected}
+          onSubmit={submitGuess}
+          disabled={status !== "playing"}
+        />
+        <div className="rounded-2xl bg-stone-900/70 p-3 pb-2 backdrop-blur-sm">
+          <GuessTable guesses={guesses} maxRows={maxGuesses} />
+        </div>
+        <RecapMap guesses={guesses} />
+        {(isWon || isLost) && renderTerminalPanel(status)}
       </div>
     </main>
   );
