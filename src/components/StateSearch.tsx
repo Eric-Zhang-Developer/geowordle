@@ -99,6 +99,9 @@ export function StateSearch({ value, remaining, onChange, onSubmit, disabled }: 
             if (exact) {
               onSubmit(exact.name);
               setIsPickerOpen(false);
+            } else if (suggestions.length > 0) {
+              onSubmit(suggestions[0].name);
+              setIsPickerOpen(false);
             }
           }
         }}
