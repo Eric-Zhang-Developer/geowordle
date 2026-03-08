@@ -64,8 +64,17 @@ export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearc
           })
           .slice(0, 12);
 
+  // Ghost text: show first suggestion whose name starts with the typed value
+  const ghostMatch =
+    query !== "" ? suggestions.find((s) => s.name.toLowerCase().startsWith(query)) : undefined;
+  const ghostText = ghostMatch ? value + ghostMatch.name.slice(value.length) : "";
+
   return (
     <div className="relative w-full max-w-sm mb-6">
+      {/* Ghost suggestion layer (behind) */}
+      <div className="w-full px-3 py-2 text-base text-gray-600 pointer-events-none whitespace-nowrap overflow-hidden select-none border border-transparent rounded" aria-hidden="true">
+        {ghostText || "\u00A0"}
+      </div>
       <input
         value={value}
         placeholder="Type a state..."
@@ -78,7 +87,21 @@ export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearc
           // Let suggestion clicks land before closing.
           window.setTimeout(() => setIsPickerOpen(false), 120);
         }}
-        className="w-full px-3 py-2 text-base bg-gray-900 text-white border border-gray-600 rounded outline-none placeholder-gray-500 focus:border-blue-400"
+        onKeyDown={(e) => {
+          if (e.key === "Tab" && suggestions.length > 0) {
+            e.preventDefault();
+            onChange(suggestions[0].name);
+          } else if (e.key === "Enter") {
+            const exact = remaining.find(
+              (s) => s.name.toLowerCase() === value.trim().toLowerCase()
+            );
+            if (exact) {
+              onSubmit(exact.name);
+              setIsPickerOpen(false);
+            }
+          }
+        }}
+        className="absolute inset-0 w-full px-3 py-2 text-base bg-transparent text-white border border-gray-600 rounded outline-none placeholder-gray-500 focus:border-blue-400"
       />
       {isPickerOpen && suggestions.length > 0 && (
         <div className="absolute z-10 mt-1 w-full max-h-80 overflow-y-auto bg-gray-900 border border-gray-700 rounded shadow-lg">
