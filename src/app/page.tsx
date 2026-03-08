@@ -14,8 +14,8 @@ const EMOJI: Record<string, string> = { correct: '🟩', close: '🟨', incorrec
 
 function generateShareString(guesses: GuessResult[], mode: string, round: number): string {
   const header = mode === 'daily'
-    ? `Statdle (Daily) - ${guesses.length} Guesses`
-    : `Statdle (Endless R${round}) - ${guesses.length} Guesses`;
+    ? `Statle (Daily) - ${guesses.length} Guesses`
+    : `Statle (Endless R${round}) - ${guesses.length} Guesses`;
   const rows = guesses.map(g => SHARE_KEYS.map(k => EMOJI[g.cells[k].state]).join('')).join('\n');
   return `${header}\n\n${rows}`;
 }
@@ -142,7 +142,7 @@ export default function Home() {
       <VictoryConfetti active={isWon && isTerminalRevealed} />
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
         <div className="mb-8 flex flex-col items-center gap-2">
-        <h1 className="font-rye text-4xl tracking-wide text-stone-900">Statdle</h1>
+        <h1 className="font-rye text-4xl tracking-wide text-stone-900">Statle</h1>
         {mode === "daily" ? (
           <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-amber-100 border border-stone-700">
             Daily

@@ -13,7 +13,7 @@
 
 ---
 
-<h1 align="center">Statdle</h1>
+<h1 align="center">Statle</h1>
 
 <p align="center">
   <strong>Wordle, but make it geography.</strong>
@@ -31,12 +31,12 @@
 
 <!-- TODO: Add screenshot or demo GIF here -->
 <!-- <p align="center">
-  <img src="./demo.gif" alt="Statdle Demo" width="600" />
+  <img src="./demo.gif" alt="Statle Demo" width="600" />
 </p> -->
 
 ## Overview
 
-**Statdle** challenges you to guess today's mystery US state using statistical clues that update with every guess.
+**Statle** challenges you to guess today's mystery US state using statistical clues that update with every guess.
 
 Each guess reveals color-coded feedback across 8 attributes — region, population, area, population density, electoral votes, GDP per capita, coastline, and year of statehood. Green means exact match, amber means close, red means wrong — with arrows telling you which direction to move for numeric clues. Hand someone the keyboard and they're hooked in 30 seconds.
 
