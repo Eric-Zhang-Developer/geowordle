@@ -49,35 +49,35 @@ export function GuessTable({ guesses }: { guesses: GuessResult[] }) {
         Swipe to view all clues
       </p>
       <div className="w-full max-w-full overflow-x-auto overscroll-x-contain pb-2">
-      <table className="min-w-max border-separate border-spacing-2">
-        <thead>
-          <tr>
-            <th className="min-w-[132px] rounded bg-stone-700 px-2 py-2 text-center text-[10px] font-semibold whitespace-nowrap text-amber-50 sm:min-w-[180px] sm:py-3 sm:text-xs">
-              State
-            </th>
-            {COLUMNS.map((col) => (
-              <th
-                key={col.key}
-                className="w-[88px] rounded bg-stone-700 px-1 py-2 text-center text-[10px] font-semibold whitespace-nowrap text-amber-50 sm:w-24 sm:py-3 sm:text-xs"
-              >
-                {col.label}
+        <table className="min-w-max border-separate border-spacing-2">
+          <thead>
+            <tr>
+              <th className="min-w-[132px] rounded bg-stone-700 px-2 py-2 text-center text-[10px] font-semibold whitespace-nowrap text-amber-50 sm:min-w-[180px] sm:py-3 sm:text-xs">
+                State
               </th>
+              {COLUMNS.map((col) => (
+                <th
+                  key={col.key}
+                  className="w-[88px] rounded bg-stone-700 px-1 py-2 text-center text-[10px] font-semibold whitespace-nowrap text-amber-50 sm:w-24 sm:py-3 sm:text-xs"
+                >
+                  {col.label}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {guesses.map((g, i) => (
+              <GuessRow
+                key={i}
+                guess={g}
+                isNew={i === guesses.length - 1}
+                columns={COLUMNS}
+                bg={BG}
+                indicator={INDICATOR}
+              />
             ))}
-          </tr>
-        </thead>
-        <tbody>
-          {guesses.map((g, i) => (
-            <GuessRow
-              key={i}
-              guess={g}
-              isNew={i === guesses.length - 1}
-              columns={COLUMNS}
-              bg={BG}
-              indicator={INDICATOR}
-            />
-          ))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
       </div>
     </div>
   );
