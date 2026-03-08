@@ -1,15 +1,14 @@
 @import "tailwindcss";
 
 @keyframes cell-uncover {
-  0% {
+  from {
     transform: scaleX(1);
   }
-  100% {
+  to {
     transform: scaleX(0);
   }
 }
 
-.cell-uncover {
-  animation: cell-uncover 0.35s ease-in-out forwards;
-  transform-origin: right;
+@theme {
+  --animate-cell-uncover: cell-uncover 0.35s ease-in-out forwards;
 }

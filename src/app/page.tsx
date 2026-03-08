@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useGame } from "../hooks/useGame";
 import { GuessTable } from "../components/GuessTable";
+import { RecapMap } from "../components/RecapMap";
 
 const STATE_PICS_FOLDER = "state-pics";
 const STATE_IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".webp"] as const;
@@ -163,6 +164,7 @@ export default function Home() {
         </div>
       )}
 
+      {isWon && <RecapMap guesses={guesses} />}
       <GuessTable guesses={guesses} />
     </main>
   );
