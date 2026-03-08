@@ -10,5 +10,5 @@
 }
 
 @theme {
-  --animate-cell-uncover: cell-uncover 0.35s ease-in-out forwards;
+  --animate-cell-uncover: cell-uncover 0.25s ease-in-out forwards;
 }

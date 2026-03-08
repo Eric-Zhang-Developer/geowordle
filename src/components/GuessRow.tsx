@@ -12,7 +12,7 @@ interface GuessRowProps {
   indicator: Record<CellDirection, string>;
 }
 
-const STAGGER_MS = 400; // must be > animation duration (350ms)
+const STAGGER_MS = 300;
 
 export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps) {
   const total = columns.length + 1; // +1 for name cell
