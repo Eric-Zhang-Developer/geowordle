@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useGame } from "../hooks/useGame";
 import { GuessTable } from "../components/GuessTable";
+import { RecapMap } from "../components/RecapMap";
 
 const STATE_PICS_FOLDER = "state-pics";
 const STATE_IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".webp"] as const;
+const VICTORY_REVEAL_DELAY_MS = 2500;
 
 function stateImagePath(name: string, ext: string) {
   const slug = name.toLowerCase().replace(/\s+/g, "-");
@@ -59,6 +61,8 @@ export default function Home() {
   } = useGame();
 
   const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [isVictoryRevealed, setIsVictoryRevealed] = useState(false);
+  const recapRef = useRef<HTMLDivElement | null>(null);
   const query = selected.trim().toLowerCase();
   const suggestions =
     query === ""
@@ -67,12 +71,33 @@ export default function Home() {
           .filter((s) => {
             const nameLower = s.name.toLowerCase();
             const words = nameLower.split(/\s+/);
-            return (
-              nameLower.startsWith(query) ||
-              words.some((w) => w.startsWith(query))
-            );
+            return nameLower.startsWith(query) || words.some((w) => w.startsWith(query));
           })
           .slice(0, 12);
+
+  useEffect(() => {
+    if (!isWon) return;
+
+    const timer = window.setTimeout(() => setIsVictoryRevealed(true), VICTORY_REVEAL_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [isWon]);
+
+  useEffect(() => {
+    if (!isVictoryRevealed) return;
+    recapRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [isVictoryRevealed]);
+
+  function handleSwitchToEndless() {
+    setIsPickerOpen(false);
+    setIsVictoryRevealed(false);
+    switchToEndless();
+  }
+
+  function handleNextRound() {
+    setIsPickerOpen(false);
+    setIsVictoryRevealed(false);
+    nextRound();
+  }
 
   return (
     <main className="p-8 font-mono flex flex-col items-center">
@@ -105,26 +130,28 @@ export default function Home() {
       </div>
 
       {isWon ? (
-        <div className="space-y-3 mb-6">
-          <p className="text-green-400 text-xl font-bold">
-            Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
-          </p>
-          {mode === "daily" ? (
-            <button
-              onClick={switchToEndless}
-              className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
-            >
-              Try Endless Mode
-            </button>
-          ) : (
-            <button
-              onClick={nextRound}
-              className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
-            >
-              Next Round
-            </button>
-          )}
-        </div>
+        isVictoryRevealed ? (
+          <div className="space-y-3 mb-6">
+            <p className="text-green-400 text-xl font-bold">
+              Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
+            </p>
+            {mode === "daily" ? (
+              <button
+                onClick={handleSwitchToEndless}
+                className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+              >
+                Try Endless Mode
+              </button>
+            ) : (
+              <button
+                onClick={handleNextRound}
+                className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+              >
+                Next Round
+              </button>
+            )}
+          </div>
+        ) : null
       ) : (
         <div className="relative w-full max-w-sm mb-6">
           <input
@@ -162,8 +189,12 @@ export default function Home() {
           )}
         </div>
       )}
-
       <GuessTable guesses={guesses} />
+      {isWon && isVictoryRevealed && (
+        <div ref={recapRef}>
+          <RecapMap guesses={guesses} />
+        </div>
+      )}
     </main>
   );
 }

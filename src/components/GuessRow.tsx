@@ -12,7 +12,7 @@ interface GuessRowProps {
   indicator: Record<CellDirection, string>;
 }
 
-const STAGGER_MS = 400; // must be > animation duration (350ms)
+const STAGGER_MS = 300;
 
 export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps) {
   const total = columns.length + 1; // +1 for name cell
@@ -20,7 +20,8 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
 
   useEffect(() => {
     if (!isNew) return;
-    const timers = Array.from({ length: total }, (_, i) =>
+    // +1 extra timer clears the last cell's isFlipping overlay
+    const timers = Array.from({ length: total + 1 }, (_, i) =>
       setTimeout(() => setRevealed(i + 1), i * STAGGER_MS),
     );
     return () => timers.forEach(clearTimeout);
@@ -40,7 +41,7 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
         ${nameActive ? "bg-gray-900" : "bg-gray-700"}`}
       >
         {nameActive && guess.state.name}
-        {nameFlipping && <span className="absolute inset-0 bg-gray-700 rounded cell-uncover" />}
+        {nameFlipping && <span className="absolute inset-0 bg-gray-700 rounded animate-cell-uncover origin-right" />}
       </td>
       {columns.map((col, i) => {
         const cellIdx = i + 1;
@@ -53,7 +54,7 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
             className={`${base} text-white w-24 ${isActive ? bg[cell.state] : "bg-gray-700"}`}
           >
             {isActive && `${col.fmt(guess.state)}${cell.direction ? indicator[cell.direction] : ""}`}
-            {isFlipping && <span className="absolute inset-0 bg-gray-700 rounded cell-uncover" />}
+            {isFlipping && <span className="absolute inset-0 bg-gray-700 rounded animate-cell-uncover origin-right" />}
           </td>
         );
       })}
