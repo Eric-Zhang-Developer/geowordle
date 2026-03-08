@@ -2,6 +2,13 @@
 import { useEffect, useState } from "react";
 import { CellDirection, CellState, GuessResult, State } from "../lib/gameLogic";
 
+const STATE_PICS = "state-pics";
+
+function statePicSrc(name: string) {
+  const slug = name.toLowerCase().replace(/\s+/g, "-");
+  return `/${STATE_PICS}/${slug}.png`;
+}
+
 type ColDef = { key: keyof Omit<State, "name">; fmt: (s: State) => string };
 
 interface GuessRowProps {
@@ -37,9 +44,20 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
   return (
     <tr>
       <td
-        className={`${base} whitespace-nowrap font-bold text-white w-28
+        className={`${base} font-bold text-white min-w-[180px] px-0
         ${nameActive ? "bg-gray-900" : "bg-gray-700"}`}
       >
+        {nameActive && (
+          <div className="flex items-center gap-3 h-full w-full px-3">
+            <img
+              src={statePicSrc(guess.state.name)}
+              alt=""
+              className="w-14 h-14 object-contain flex-shrink-0"
+            />
+            <span className="flex-1 text-left truncate">{guess.state.name}</span>
+          </div>
+        )}
+        {nameFlipping && <span className="absolute inset-0 bg-gray-700 rounded cell-uncover" />}
         {nameActive && guess.state.name}
         {nameFlipping && <span className="absolute inset-0 bg-gray-700 rounded animate-cell-uncover origin-right" />}
       </td>
