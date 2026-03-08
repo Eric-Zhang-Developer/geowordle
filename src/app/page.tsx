@@ -9,7 +9,7 @@ import { StateSearch } from "../components/StateSearch";
 import { VictoryConfetti } from "../components/VictoryConfetti";
 import { RoundStatus } from "../lib/gameRules";
 
-const SHARE_KEYS = ['region', 'population', 'area', 'gdpPerCapita', 'coastline', 'medianAge', 'yearOfStatehood', 'landlocked'] as const;
+const SHARE_KEYS = ['region', 'population', 'area', 'density', 'electoralVotes', 'gdpPerCapita', 'coastline', 'yearOfStatehood'] as const;
 const EMOJI: Record<string, string> = { correct: '🟩', close: '🟨', incorrect: '🟥' };
 
 function generateShareString(guesses: GuessResult[], mode: string, round: number): string {

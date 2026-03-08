@@ -1,7 +1,15 @@
-import { CellDirection, CellState, GuessResult, State } from "../lib/gameLogic";
+import { CellDirection, CellState, getPopulationDensity, GuessResult, State } from "../lib/gameLogic";
 import { GuessRow, PlaceholderGuessRow } from "./GuessRow";
 
-type Column = keyof Omit<State, "name">;
+type Column =
+  | "region"
+  | "population"
+  | "area"
+  | "density"
+  | "electoralVotes"
+  | "gdpPerCapita"
+  | "coastline"
+  | "yearOfStatehood";
 
 interface ColumnDef {
   key: Column;
@@ -21,14 +29,22 @@ const COLUMNS: ColumnDef[] = [
   },
   { key: "area", label: "Area (mi²)", fmt: (s) => s.area.toLocaleString() },
   {
+    key: "density",
+    label: "Density",
+    fmt: (s) => `${Math.round(getPopulationDensity(s)).toLocaleString()}/mi²`,
+  },
+  {
+    key: "electoralVotes",
+    label: "Electoral Votes",
+    fmt: (s) => `${s.electoralVotes}`,
+  },
+  {
     key: "gdpPerCapita",
     label: "GDP / Capita",
     fmt: (s) => `$${(s.gdpPerCapita / 1000).toFixed(0)}K`,
   },
   { key: "coastline", label: "Coastline", fmt: (s) => s.coastline },
-  { key: "medianAge", label: "Median Age", fmt: (s) => `${s.medianAge}` },
   { key: "yearOfStatehood", label: "Year of Statehood", fmt: (s) => `${s.yearOfStatehood}` },
-  { key: "landlocked", label: "Landlocked", fmt: (s) => (s.landlocked ? "Yes" : "No") },
 ];
 
 const BG: Record<CellState, string> = {

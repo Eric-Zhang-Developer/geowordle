@@ -10,7 +10,18 @@ function statePicSrc(name: string) {
   return `/${STATE_PICS}/${slug}.png`;
 }
 
-type ColDef = { key: keyof Omit<State, "name">; fmt: (s: State) => string };
+type ColDef = {
+  key:
+    | "region"
+    | "population"
+    | "area"
+    | "density"
+    | "electoralVotes"
+    | "gdpPerCapita"
+    | "coastline"
+    | "yearOfStatehood";
+  fmt: (s: State) => string;
+};
 
 interface GuessRowProps {
   guess: GuessResult;
