@@ -99,52 +99,48 @@ export default function Home() {
         <span className="text-center text-stone-700">▲▼ = too low / too high</span>
       </div>
 
-      {isWon ? (
-        isVictoryRevealed ? (
-          <div className="mb-6 space-y-3 text-center">
-            <p className="text-green-700 text-xl font-bold">
+      <StateSearch
+        value={selected}
+        remaining={remaining}
+        onChange={setSelected}
+        onSubmit={submitGuess}
+        disabled={isWon}
+      />
+      <div className="bg-stone-900/70 backdrop-blur-sm rounded-2xl p-3">
+        <GuessTable guesses={guesses} />
+      </div>
+      {isWon && isVictoryRevealed && (
+        <>
+          <RecapMap guesses={guesses} />
+          <div ref={recapRef} className="mt-6 mb-2 flex flex-col items-center gap-4 bg-stone-900/75 backdrop-blur-sm rounded-2xl px-8 py-6 text-center">
+            <p className="text-green-400 text-3xl font-bold drop-shadow-lg">
               Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
             </p>
-            <div className="flex justify-center gap-3">
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={handleShare}
+                className="px-8 py-3 text-lg font-semibold bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
+              >
+                {copied ? "Copied!" : "Share"}
+              </button>
               {mode === "daily" ? (
                 <button
                   onClick={handleSwitchToEndless}
-                  className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+                  className="px-8 py-3 text-lg font-semibold bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
                 >
                   Try Endless Mode
                 </button>
               ) : (
                 <button
                   onClick={handleNextRound}
-                  className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+                  className="px-8 py-3 text-lg font-semibold bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
                 >
                   Next Round
                 </button>
               )}
-              <button
-                onClick={handleShare}
-                className="px-5 py-2 text-base bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
-              >
-                {copied ? "Copied!" : "Share"}
-              </button>
             </div>
           </div>
-        ) : null
-      ) : (
-        <StateSearch
-          value={selected}
-          remaining={remaining}
-          onChange={setSelected}
-          onSubmit={submitGuess}
-        />
-      )}
-      <div className="bg-stone-900/70 backdrop-blur-sm rounded-2xl p-3">
-        <GuessTable guesses={guesses} />
-      </div>
-      {isWon && isVictoryRevealed && (
-        <div ref={recapRef}>
-          <RecapMap guesses={guesses} />
-        </div>
+        </>
       )}
       </div>
     </main>

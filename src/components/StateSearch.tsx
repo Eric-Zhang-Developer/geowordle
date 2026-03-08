@@ -12,6 +12,7 @@ interface StateSearchProps {
   remaining: State[];
   onChange: (value: string) => void;
   onSubmit: (name: string) => void;
+  disabled?: boolean;
 }
 
 function stateImagePath(name: string, ext: string) {
@@ -50,7 +51,7 @@ function StateThumb({ name }: { name: string }) {
   );
 }
 
-export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearchProps) {
+export function StateSearch({ value, remaining, onChange, onSubmit, disabled }: StateSearchProps) {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const query = value.trim().toLowerCase();
   const suggestions =
@@ -70,7 +71,7 @@ export function StateSearch({ value, remaining, onChange, onSubmit }: StateSearc
   const ghostText = ghostMatch ? value + ghostMatch.name.slice(value.length) : "";
 
   return (
-    <div className="relative w-full max-w-sm mb-6">
+    <div className={`relative w-full max-w-sm mb-6 ${disabled ? "opacity-50 pointer-events-none" : ""}`}>
       {/* Ghost suggestion layer (behind) */}
       <div className="w-full px-3 py-2 text-base text-stone-400 pointer-events-none whitespace-nowrap overflow-hidden select-none border border-transparent rounded" aria-hidden="true">
         {ghostText || "\u00A0"}
