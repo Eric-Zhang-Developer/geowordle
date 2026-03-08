@@ -58,8 +58,9 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+    const containerEl = container;
 
-    const svg = container.querySelector("svg");
+    const svg = containerEl.querySelector("svg");
     if (!svg) return;
 
     svg.querySelectorAll("title").forEach((node) => node.remove());
@@ -76,7 +77,7 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
     }
 
     function getTooltipPoint(clientX: number, clientY: number, yOffset: number) {
-      const rect = container.getBoundingClientRect();
+      const rect = containerEl.getBoundingClientRect();
       const tooltipWidth = tooltipRef.current?.offsetWidth ?? 140;
       const tooltipHeight = tooltipRef.current?.offsetHeight ?? 36;
       const unclampedX = clientX - rect.left + TOOLTIP_OFFSET_X;
@@ -128,12 +129,12 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
     }
 
     function handleDocumentPointerDown(event: PointerEvent) {
-      if (!container.contains(event.target as Node)) {
+      if (!containerEl.contains(event.target as Node)) {
         setTooltip(null);
       }
     }
 
-    const stateElements = Array.from(container.querySelectorAll("[data-name]"));
+    const stateElements = Array.from(containerEl.querySelectorAll("[data-name]"));
     stateElements.forEach((element) => {
       element.addEventListener("pointerenter", handlePointerEnter);
       element.addEventListener("pointermove", handlePointerMove);
