@@ -68,11 +68,11 @@ export default function Home() {
   }
 
   return (
-    <main className="w-full overflow-x-hidden px-3 py-6 font-mono sm:px-8 sm:py-8">
+    <main className="w-full overflow-x-hidden px-3 py-6 sm:px-8 sm:py-8">
       <VictoryConfetti active={isVictoryRevealed} />
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
         <div className="mb-8 flex flex-col items-center gap-2">
-        <h1 className="text-3xl font-bold">Geodle</h1>
+        <h1 className="font-rye text-4xl tracking-wide">Geodle</h1>
         {mode === "daily" ? (
           <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 border border-blue-300">
             Daily

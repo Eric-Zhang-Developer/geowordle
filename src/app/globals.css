@@ -11,4 +11,6 @@
 
 @theme {
   --animate-cell-uncover: cell-uncover 0.25s ease-in-out forwards;
+  --font-rye: var(--font-rye);
+  --font-special-elite: var(--font-special-elite);
 }
