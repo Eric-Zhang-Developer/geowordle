@@ -18,9 +18,10 @@ export function useGame() {
   const guessedNames = new Set(guesses.map(g => g.state.name));
   const remaining = (statesData as State[]).filter(s => !guessedNames.has(s.name));
 
-  function submitGuess() {
-    if (!selected) return;
-    const state = (statesData as State[]).find(s => s.name === selected);
+  function submitGuess(name?: string) {
+    const guessName = name ?? selected;
+    if (!guessName) return;
+    const state = (statesData as State[]).find(s => s.name === guessName);
     if (!state) return;
     setGuesses(prev => [...prev, compareGuess(state, target)]);
     setSelected('');
