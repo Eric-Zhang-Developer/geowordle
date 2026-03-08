@@ -4,13 +4,24 @@ import { useGame } from "../hooks/useGame";
 import { GuessTable } from "../components/GuessTable";
 
 export default function Home() {
-  const { mode, round, guesses, selected, setSelected, submitGuess, isWon, remaining, switchToEndless, nextRound } = useGame();
+  const {
+    mode,
+    round,
+    guesses,
+    selected,
+    setSelected,
+    submitGuess,
+    isWon,
+    remaining,
+    switchToEndless,
+    nextRound,
+  } = useGame();
 
   return (
     <main className="p-8 font-mono flex flex-col items-center">
       <div className="flex items-center gap-2 mb-1">
         <h1 className="text-2xl font-bold">GeoWordle</h1>
-        {mode === 'daily' ? (
+        {mode === "daily" ? (
           <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-900 text-blue-300 border border-blue-700">
             Daily
           </span>
@@ -21,11 +32,19 @@ export default function Home() {
         )}
       </div>
       <div className="flex items-center gap-3 mb-6 text-xs text-gray-400">
-        <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm bg-green-700"/>Correct</span>
-        <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm bg-red-700"/>Wrong</span>
-        <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm bg-amber-500"/>Close</span>
-        <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm bg-yellow-600"/>Partial</span>
-        <span className="text-gray-500">▲▼ = direction</span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
+          Correct
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded-sm bg-red-700" />
+          Wrong
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
+          Close
+        </span>
+        <span className="text-gray-500">Red + ▲▼ = too low / too high</span>
       </div>
 
       {isWon ? (
@@ -33,12 +52,18 @@ export default function Home() {
           <p className="text-green-400 text-xl font-bold">
             Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
           </p>
-          {mode === 'daily' ? (
-            <button onClick={switchToEndless} className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600">
+          {mode === "daily" ? (
+            <button
+              onClick={switchToEndless}
+              className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+            >
               Try Endless Mode
             </button>
           ) : (
-            <button onClick={nextRound} className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600">
+            <button
+              onClick={nextRound}
+              className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+            >
               Next Round
             </button>
           )}

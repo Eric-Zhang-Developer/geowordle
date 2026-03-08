@@ -1,7 +1,7 @@
-import { CellState, GuessResult, State } from '../lib/gameLogic';
-import { GuessRow } from './GuessRow';
+import { CellState, GuessResult, State } from "../lib/gameLogic";
+import { GuessRow } from "./GuessRow";
 
-type Column = keyof Omit<State, 'name'>;
+type Column = keyof Omit<State, "name">;
 
 interface ColumnDef {
   key: Column;
@@ -10,30 +10,39 @@ interface ColumnDef {
 }
 
 const COLUMNS: ColumnDef[] = [
-  { key: 'region',          label: 'Region',            fmt: s => s.region },
-  { key: 'population',      label: 'Population',        fmt: s => s.population >= 1e6 ? `${(s.population / 1e6).toFixed(1)}M` : `${(s.population / 1e3).toFixed(0)}K` },
-  { key: 'area',            label: 'Area (mi²)',         fmt: s => s.area.toLocaleString() },
-  { key: 'gdpPerCapita',    label: 'GDP / Capita',       fmt: s => `$${(s.gdpPerCapita / 1000).toFixed(0)}K` },
-  { key: 'coastline',       label: 'Coastline',         fmt: s => s.coastline },
-  { key: 'medianAge',       label: 'Median Age',        fmt: s => `${s.medianAge}` },
-  { key: 'yearOfStatehood', label: 'Year of Statehood', fmt: s => `${s.yearOfStatehood}` },
-  { key: 'landlocked',      label: 'Landlocked',        fmt: s => s.landlocked ? 'Yes' : 'No' },
+  { key: "region", label: "Region", fmt: (s) => s.region },
+  {
+    key: "population",
+    label: "Population",
+    fmt: (s) =>
+      s.population >= 1e6
+        ? `${(s.population / 1e6).toFixed(1)}M`
+        : `${(s.population / 1e3).toFixed(0)}K`,
+  },
+  { key: "area", label: "Area (mi²)", fmt: (s) => s.area.toLocaleString() },
+  {
+    key: "gdpPerCapita",
+    label: "GDP / Capita",
+    fmt: (s) => `$${(s.gdpPerCapita / 1000).toFixed(0)}K`,
+  },
+  { key: "coastline", label: "Coastline", fmt: (s) => s.coastline },
+  { key: "medianAge", label: "Median Age", fmt: (s) => `${s.medianAge}` },
+  { key: "yearOfStatehood", label: "Year of Statehood", fmt: (s) => `${s.yearOfStatehood}` },
+  { key: "landlocked", label: "Landlocked", fmt: (s) => (s.landlocked ? "Yes" : "No") },
 ];
 
 const BG: Record<CellState, string> = {
-  correct:   'bg-green-700',
-  incorrect: 'bg-red-700',
-  partial:   'bg-yellow-600',
-  close:     'bg-amber-500',
-  higher:    'bg-amber-500',
-  lower:     'bg-amber-500',
+  correct: "bg-green-700",
+  incorrect: "bg-red-700",
+  close: "bg-amber-500",
+  higher: "bg-red-700",
+  lower: "bg-red-700",
 };
 
 const INDICATOR: Partial<Record<CellState, string>> = {
-  higher:  ' ▲',
-  lower:   ' ▼',
-  close:   ' ≈',
-  partial: ' ~',
+  higher: " ▲",
+  lower: " ▼",
+  close: " ≈",
 };
 
 export function GuessTable({ guesses }: { guesses: GuessResult[] }) {
@@ -45,8 +54,11 @@ export function GuessTable({ guesses }: { guesses: GuessResult[] }) {
             <th className="bg-gray-800 text-white text-xs font-semibold py-3 text-center whitespace-nowrap w-28 rounded">
               State
             </th>
-            {COLUMNS.map(col => (
-              <th key={col.key} className="bg-gray-800 text-white text-xs font-semibold py-3 text-center whitespace-nowrap w-24 rounded">
+            {COLUMNS.map((col) => (
+              <th
+                key={col.key}
+                className="bg-gray-800 text-white text-xs font-semibold py-3 text-center whitespace-nowrap w-24 rounded"
+              >
                 {col.label}
               </th>
             ))}
