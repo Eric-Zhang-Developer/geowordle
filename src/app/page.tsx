@@ -2,10 +2,22 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "../hooks/useGame";
+import { GuessResult } from "../lib/gameLogic";
 import { GuessTable } from "../components/GuessTable";
 import { RecapMap } from "../components/RecapMap";
 import { StateSearch } from "../components/StateSearch";
 import { VictoryConfetti } from "../components/VictoryConfetti";
+
+const SHARE_KEYS = ['region', 'population', 'area', 'gdpPerCapita', 'coastline', 'medianAge', 'yearOfStatehood', 'landlocked'] as const;
+const EMOJI: Record<string, string> = { correct: '🟩', close: '🟨', incorrect: '🟥' };
+
+function generateShareString(guesses: GuessResult[], mode: string, round: number): string {
+  const header = mode === 'daily'
+    ? `Geodle (Daily) - ${guesses.length} Guesses`
+    : `Geodle (Endless R${round}) - ${guesses.length} Guesses`;
+  const rows = guesses.map(g => SHARE_KEYS.map(k => EMOJI[g.cells[k].state]).join('')).join('\n');
+  return `${header}\n\n${rows}`;
+}
 
 const VICTORY_REVEAL_DELAY_MS = 2500;
 
@@ -24,6 +36,7 @@ export default function Home() {
   } = useGame();
 
   const [isVictoryRevealed, setIsVictoryRevealed] = useState(false);
+  const [copied, setCopied] = useState(false);
   const recapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -46,6 +59,12 @@ export default function Home() {
   function handleNextRound() {
     setIsVictoryRevealed(false);
     nextRound();
+  }
+
+  function handleShare() {
+    navigator.clipboard.writeText(generateShareString(guesses, mode, round));
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
   }
 
   return (
@@ -86,21 +105,29 @@ export default function Home() {
             <p className="text-green-400 text-xl font-bold">
               Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
             </p>
-            {mode === "daily" ? (
+            <div className="flex justify-center gap-3">
+              {mode === "daily" ? (
+                <button
+                  onClick={handleSwitchToEndless}
+                  className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+                >
+                  Try Endless Mode
+                </button>
+              ) : (
+                <button
+                  onClick={handleNextRound}
+                  className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+                >
+                  Next Round
+                </button>
+              )}
               <button
-                onClick={handleSwitchToEndless}
-                className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+                onClick={handleShare}
+                className="px-5 py-2 text-base bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
               >
-                Try Endless Mode
+                {copied ? "Copied!" : "Share"}
               </button>
-            ) : (
-              <button
-                onClick={handleNextRound}
-                className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
-              >
-                Next Round
-              </button>
-            )}
+            </div>
           </div>
         ) : null
       ) : (
