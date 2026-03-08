@@ -6,7 +6,7 @@ const rye = Rye({ subsets: ["latin"], weight: "400", variable: "--font-rye" });
 const specialElite = Special_Elite({ subsets: ["latin"], weight: "400", variable: "--font-special-elite" });
 
 export const metadata: Metadata = {
-  title: "Geodle",
+  title: "Statdle",
   description: "Guess the US state from statistical clues",
 };
 
