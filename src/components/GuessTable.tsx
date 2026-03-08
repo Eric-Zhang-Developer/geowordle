@@ -13,38 +13,38 @@ type Column =
 
 interface ColumnDef {
   key: Column;
-  label: string;
+  labelLines: string[];
   fmt: (s: State) => string;
 }
 
 const COLUMNS: ColumnDef[] = [
-  { key: "region", label: "Region", fmt: (s) => s.region },
+  { key: "region", labelLines: ["Region"], fmt: (s) => s.region },
   {
     key: "population",
-    label: "Population",
+    labelLines: ["Population"],
     fmt: (s) =>
       s.population >= 1e6
         ? `${(s.population / 1e6).toFixed(1)}M`
         : `${(s.population / 1e3).toFixed(0)}K`,
   },
-  { key: "area", label: "Area (mi²)", fmt: (s) => s.area.toLocaleString() },
+  { key: "area", labelLines: ["Area (mi²)"], fmt: (s) => s.area.toLocaleString() },
   {
     key: "density",
-    label: "Density",
+    labelLines: ["Density"],
     fmt: (s) => `${Math.round(getPopulationDensity(s)).toLocaleString()}/mi²`,
   },
   {
     key: "electoralVotes",
-    label: "Electoral Votes",
+    labelLines: ["Electoral", "Votes"],
     fmt: (s) => `${s.electoralVotes}`,
   },
   {
     key: "gdpPerCapita",
-    label: "GDP / Capita",
+    labelLines: ["GDP / Capita"],
     fmt: (s) => `$${(s.gdpPerCapita / 1000).toFixed(0)}K`,
   },
-  { key: "coastline", label: "Coastline", fmt: (s) => s.coastline },
-  { key: "yearOfStatehood", label: "Year of Statehood", fmt: (s) => `${s.yearOfStatehood}` },
+  { key: "coastline", labelLines: ["Coastline"], fmt: (s) => s.coastline },
+  { key: "yearOfStatehood", labelLines: ["Year of", "Statehood"], fmt: (s) => `${s.yearOfStatehood}` },
 ];
 
 const BG: Record<CellState, string> = {
@@ -76,9 +76,18 @@ export function GuessTable({ guesses, maxRows }: { guesses: GuessResult[]; maxRo
               {COLUMNS.map((col) => (
                 <th
                   key={col.key}
-                  className="w-[88px] rounded bg-stone-700 px-1 py-2 text-center text-[10px] font-semibold whitespace-nowrap text-amber-50 sm:w-24 sm:py-3 sm:text-xs"
+                  className="w-20 rounded bg-stone-700 px-1 py-2 text-center text-[10px] leading-tight font-semibold text-amber-50 sm:w-24 sm:py-3 sm:text-xs"
                 >
-                  {col.label}
+                  <span className="flex min-h-10 items-center justify-center text-center">
+                    <span>
+                      {col.labelLines.map((line, index) => (
+                        <span key={line} className="block">
+                          {line}
+                          {index < col.labelLines.length - 1 ? <br /> : null}
+                        </span>
+                      ))}
+                    </span>
+                  </span>
                 </th>
               ))}
             </tr>
