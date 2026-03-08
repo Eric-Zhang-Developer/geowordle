@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { CellState, GuessResult, State } from "../lib/gameLogic";
+import { CellDirection, CellState, GuessResult, State } from "../lib/gameLogic";
 
 type ColDef = { key: keyof Omit<State, "name">; fmt: (s: State) => string };
 
@@ -9,7 +9,7 @@ interface GuessRowProps {
   isNew: boolean;
   columns: ColDef[];
   bg: Record<CellState, string>;
-  indicator: Partial<Record<CellState, string>>;
+  indicator: Record<CellDirection, string>;
 }
 
 const STAGGER_MS = 400; // must be > animation duration (350ms)
@@ -50,9 +50,9 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
         return (
           <td
             key={col.key}
-            className={`${base} text-white w-24 ${isActive ? bg[cell] : "bg-gray-700"}`}
+            className={`${base} text-white w-24 ${isActive ? bg[cell.state] : "bg-gray-700"}`}
           >
-            {isActive && `${col.fmt(guess.state)}${indicator[cell] ?? ""}`}
+            {isActive && `${col.fmt(guess.state)}${cell.direction ? indicator[cell.direction] : ""}`}
             {isFlipping && <span className="absolute inset-0 bg-gray-700 rounded cell-uncover" />}
           </td>
         );

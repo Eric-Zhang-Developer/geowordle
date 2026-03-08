@@ -1,4 +1,4 @@
-import { CellState, GuessResult, State } from "../lib/gameLogic";
+import { CellDirection, CellState, GuessResult, State } from "../lib/gameLogic";
 import { GuessRow } from "./GuessRow";
 
 type Column = keyof Omit<State, "name">;
@@ -35,14 +35,11 @@ const BG: Record<CellState, string> = {
   correct: "bg-green-700",
   incorrect: "bg-red-700",
   close: "bg-amber-500",
-  higher: "bg-red-700",
-  lower: "bg-red-700",
 };
 
-const INDICATOR: Partial<Record<CellState, string>> = {
+const INDICATOR: Record<CellDirection, string> = {
   higher: " ▲",
   lower: " ▼",
-  close: " ≈",
 };
 
 export function GuessTable({ guesses }: { guesses: GuessResult[] }) {

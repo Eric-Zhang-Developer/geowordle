@@ -44,7 +44,7 @@ export default function Home() {
           <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
           Close
         </span>
-        <span className="text-gray-500">Red + ▲▼ = too low / too high</span>
+        <span className="text-gray-500">▲▼ = too low / too high</span>
       </div>
 
       {isWon ? (

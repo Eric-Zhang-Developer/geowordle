@@ -6,7 +6,7 @@ Hackathon: SASEHacks 2026 | Track: Gamification (+ Service)
 
 Wordle, but you guess a US state based on statistical clues that update with every guess. The mechanic is immediately graspable — hand someone the keyboard and they're hooked in 30 seconds.
 
-Direct inspiration: Wardle (wardlegame.com) — a Wordle clone for War Thunder vehicles. Its five-state color feedback system (correct, incorrect, partial, close, directional higher/lower) gives more information per guess than binary right/wrong, making the puzzle feel fair even when you're stumped. We use the same system pointed at geography.
+Direct inspiration: Wardle (wardlegame.com) — a Wordle clone for War Thunder vehicles. We borrow the idea of rich per-cell feedback and point it at geography, but tune the numeric hints for clearer play: exact matches are green, near misses stay amber, and arrows always show which direction to move next.
 
 ## Current State
 
@@ -14,7 +14,7 @@ Core game loop is fully implemented and working:
 - Daily puzzle seeded by date (same state for all players each day)
 - Endless mode: after winning the daily, play unlimited random states with a round counter; no state repeats within a session
 - 50 US states with validated attribute data
-- Five-state color feedback on 8 columns per guess
+- Directional numeric feedback on 8 columns per guess, with amber for near misses
 - Mode badge in header (blue = Daily, purple = Endless · Round N)
 
 ## Tech Stack
@@ -44,12 +44,12 @@ src/
 | Column | Type | Notes |
 |---|---|---|
 | region | categorical | Northeast, South, Midwest, West |
-| population | numeric | ±20% threshold for "close" |
-| area | numeric | sq miles, ±20% threshold |
-| gdpPerCapita | numeric | ±15% threshold |
+| population | numeric | ±20% threshold for amber "close"; arrows still show direction |
+| area | numeric | sq miles, ±20% threshold for amber "close"; arrows still show direction |
+| gdpPerCapita | numeric | ±15% threshold for amber "close"; arrows still show direction |
 | coastline | categorical | None / Atlantic / Pacific / Gulf / Great Lakes — partial if both have *any* coast |
-| medianAge | numeric | ±3 years threshold |
-| yearOfStatehood | numeric | ±20 years threshold |
+| medianAge | numeric | ±3 years threshold for amber "close"; arrows still show direction |
+| yearOfStatehood | numeric | ±20 years threshold for amber "close"; arrows still show direction |
 | landlocked | boolean | — |
 
 ## Color System
@@ -59,8 +59,8 @@ src/
 | Green | correct | Exact match |
 | Red | incorrect | Categorically wrong |
 | Yellow | partial | Adjacent/related (e.g. both have coastline but different type) |
-| Orange | close | Numeric, within threshold |
-| Red + arrow | higher / lower | Numeric, outside threshold — direction shown |
+| Orange + arrow | close | Numeric, within threshold, with direction shown |
+| Red + arrow | incorrect | Numeric, outside threshold, with direction shown |
 
 ## Game Modes
 
