@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useGame } from "../hooks/useGame";
 import { GuessTable } from "../components/GuessTable";
@@ -62,6 +62,7 @@ export default function Home() {
 
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const [isVictoryRevealed, setIsVictoryRevealed] = useState(false);
+  const recapRef = useRef<HTMLDivElement | null>(null);
   const query = selected.trim().toLowerCase();
   const suggestions =
     query === ""
@@ -80,6 +81,11 @@ export default function Home() {
     const timer = window.setTimeout(() => setIsVictoryRevealed(true), VICTORY_REVEAL_DELAY_MS);
     return () => window.clearTimeout(timer);
   }, [isWon]);
+
+  useEffect(() => {
+    if (!isVictoryRevealed) return;
+    recapRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [isVictoryRevealed]);
 
   function handleSwitchToEndless() {
     setIsPickerOpen(false);
@@ -184,7 +190,11 @@ export default function Home() {
         </div>
       )}
       <GuessTable guesses={guesses} />
-      {isWon && isVictoryRevealed && <RecapMap guesses={guesses} />}
+      {isWon && isVictoryRevealed && (
+        <div ref={recapRef}>
+          <RecapMap guesses={guesses} />
+        </div>
+      )}
     </main>
   );
 }
