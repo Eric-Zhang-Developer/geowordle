@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${rye.variable} ${specialElite.variable} font-special-elite antialiased text-stone-900 min-h-screen`}>{children}</body>
+      <body className={`${rye.variable} ${specialElite.variable} font-special-elite antialiased text-stone-900`}>{children}</body>
     </html>
   );
 }

@@ -68,7 +68,7 @@ export default function Home() {
   }
 
   return (
-    <main className="w-full overflow-x-hidden px-3 py-6 sm:px-8 sm:py-8">
+    <main className="w-full overflow-x-hidden px-3 pt-6 pb-2 sm:px-8 sm:pt-8 sm:pb-2">
       <VictoryConfetti active={isVictoryRevealed} />
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
         <div className="mb-8 flex flex-col items-center gap-2">
@@ -109,38 +109,36 @@ export default function Home() {
       <div className="bg-stone-900/70 backdrop-blur-sm rounded-2xl p-3">
         <GuessTable guesses={guesses} />
       </div>
+      <RecapMap guesses={guesses} />
       {isWon && isVictoryRevealed && (
-        <>
-          <RecapMap guesses={guesses} />
-          <div ref={recapRef} className="mt-6 mb-2 flex flex-col items-center gap-4 bg-stone-900/75 backdrop-blur-sm rounded-2xl px-8 py-6 text-center">
-            <p className="text-green-400 text-3xl font-bold drop-shadow-lg">
-              Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
-            </p>
-            <div className="flex justify-center gap-4">
+        <div ref={recapRef} className="mt-6 mb-2 flex flex-col items-center gap-4 bg-stone-900/75 backdrop-blur-sm rounded-2xl px-8 py-6 text-center">
+          <p className="text-green-400 text-3xl font-bold drop-shadow-lg">
+            Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
+          </p>
+          <div className="flex justify-center gap-4">
+            <button
+              onClick={handleShare}
+              className="px-8 py-3 text-lg font-semibold bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
+            >
+              {copied ? "Copied!" : "Share"}
+            </button>
+            {mode === "daily" ? (
               <button
-                onClick={handleShare}
-                className="px-8 py-3 text-lg font-semibold bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
+                onClick={handleSwitchToEndless}
+                className="px-8 py-3 text-lg font-semibold bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
               >
-                {copied ? "Copied!" : "Share"}
+                Try Endless Mode
               </button>
-              {mode === "daily" ? (
-                <button
-                  onClick={handleSwitchToEndless}
-                  className="px-8 py-3 text-lg font-semibold bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
-                >
-                  Try Endless Mode
-                </button>
-              ) : (
-                <button
-                  onClick={handleNextRound}
-                  className="px-8 py-3 text-lg font-semibold bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
-                >
-                  Next Round
-                </button>
-              )}
-            </div>
+            ) : (
+              <button
+                onClick={handleNextRound}
+                className="px-8 py-3 text-lg font-semibold bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+              >
+                Next Round
+              </button>
+            )}
           </div>
-        </>
+        </div>
       )}
       </div>
     </main>
