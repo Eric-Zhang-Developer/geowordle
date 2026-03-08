@@ -1,144 +1,79 @@
 "use client";
 
 import { useGame } from "../hooks/useGame";
-import { CellState, State } from "../lib/gameLogic";
-
-const COLUMNS = [
-  "region",
-  "population",
-  "area",
-  "gdpPerCapita",
-  "coastline",
-  "medianAge",
-  "yearOfStatehood",
-  "landlocked",
-] as const;
-
-type Column = (typeof COLUMNS)[number];
-
-const BG: Record<CellState, string> = {
-  correct: "bg-green-600",
-  incorrect: "bg-red-600",
-  partial: "bg-yellow-600",
-  close: "bg-orange-500",
-  higher: "bg-red-600",
-  lower: "bg-red-600",
-};
-
-const INDICATOR: Partial<Record<CellState, string>> = {
-  higher: " ▲",
-  lower: " ▼",
-  close: " ≈",
-  partial: " ~",
-};
-
-function fmt(col: Column, s: State): string {
-  switch (col) {
-    case "population":
-      return s.population >= 1e6
-        ? `${(s.population / 1e6).toFixed(1)}M`
-        : `${(s.population / 1e3).toFixed(0)}K`;
-    case "area":
-      return s.area.toLocaleString();
-    case "gdpPerCapita":
-      return `$${(s.gdpPerCapita / 1000).toFixed(0)}K`;
-    case "medianAge":
-      return `${s.medianAge}`;
-    case "yearOfStatehood":
-      return `${s.yearOfStatehood}`;
-    case "region":
-      return s.region;
-    case "coastline":
-      return s.coastline;
-    case "landlocked":
-      return s.landlocked ? "Yes" : "No";
-  }
-}
+import { GuessTable } from "../components/GuessTable";
 
 export default function Home() {
-  const { mode, round, guesses, selected, setSelected, submitGuess, isWon, remaining, switchToEndless, nextRound } = useGame();
+  const {
+    mode,
+    round,
+    guesses,
+    selected,
+    setSelected,
+    submitGuess,
+    isWon,
+    remaining,
+    switchToEndless,
+    nextRound,
+  } = useGame();
 
   return (
-    <main className="p-8 font-mono">
+    <main className="p-8 font-mono flex flex-col items-center">
       <div className="flex items-center gap-2 mb-1">
         <h1 className="text-2xl font-bold">GeoWordle</h1>
-        {mode === 'daily' ? (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-700 border border-blue-300">
+        {mode === "daily" ? (
+          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-900 text-blue-300 border border-blue-700">
             Daily
           </span>
         ) : (
-          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-purple-100 text-purple-700 border border-purple-300">
+          <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-purple-900 text-purple-300 border border-purple-700">
             Endless · Round {round}
           </span>
         )}
       </div>
-      <p className="mb-6 text-gray-500 text-sm">
-        Guess the US state. Colors: green=correct, red=wrong, orange=close, yellow=partial,
-        red+arrow=direction.
-      </p>
-
-      <div className="overflow-x-auto mb-6">
-        <table className="border-collapse">
-          <thead>
-            <tr>
-              <th className="border border-gray-400 px-3 py-1.5 bg-gray-200 text-xs text-left whitespace-nowrap">
-                State
-              </th>
-              {COLUMNS.map((c) => (
-                <th
-                  key={c}
-                  className="border border-gray-400 px-3 py-1.5 bg-gray-200 text-xs text-left whitespace-nowrap"
-                >
-                  {c}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {guesses.map((g, i) => (
-              <tr key={i}>
-                <td className="border border-gray-400 px-3 py-1.5 text-sm font-bold">
-                  {g.state.name}
-                </td>
-                {COLUMNS.map((c) => {
-                  const state = g.cells[c];
-                  return (
-                    <td
-                      key={c}
-                      className={`border border-gray-400 px-3 py-1.5 text-sm text-white min-w-20 ${BG[state]}`}
-                    >
-                      {fmt(c, g.state)}
-                      {INDICATOR[state] ?? ""}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="flex items-center gap-3 mb-6 text-xs text-gray-400">
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
+          Correct
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded-sm bg-red-700" />
+          Wrong
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
+          Close
+        </span>
+        <span className="text-gray-500">▲▼ = too low / too high</span>
       </div>
 
       {isWon ? (
-        <div className="space-y-3">
-          <p className="text-green-600 text-xl font-bold">
+        <div className="space-y-3 mb-6">
+          <p className="text-green-400 text-xl font-bold">
             Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
           </p>
-          {mode === 'daily' ? (
-            <button onClick={switchToEndless} className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600">
+          {mode === "daily" ? (
+            <button
+              onClick={switchToEndless}
+              className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+            >
               Try Endless Mode
             </button>
           ) : (
-            <button onClick={nextRound} className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600">
+            <button
+              onClick={nextRound}
+              className="px-5 py-2 text-base bg-purple-500 text-white rounded cursor-pointer hover:bg-purple-600"
+            >
               Next Round
             </button>
           )}
         </div>
       ) : (
-        <div className="flex gap-2">
+        <div className="flex gap-2 mb-6">
           <select
             value={selected}
             onChange={(e) => setSelected(e.target.value)}
-            className="px-3 py-2 text-base border border-gray-300 rounded"
+            className="px-3 py-2 text-base bg-gray-800 text-white border border-gray-600 rounded"
           >
             <option value="">— pick a state —</option>
             {remaining.map((s) => (
@@ -155,6 +90,8 @@ export default function Home() {
           </button>
         </div>
       )}
+
+      <GuessTable guesses={guesses} />
     </main>
   );
 }
