@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useGame } from "../hooks/useGame";
 import { GuessResult } from "../lib/gameLogic";
 import { GuessTable } from "../components/GuessTable";
@@ -59,6 +60,14 @@ export default function Home() {
     const timer = window.setTimeout(() => {
       setIsVictoryRevealed(true);
       new Audio("/sounds/victory.mp3").play().catch(() => {});
+    }, VICTORY_REVEAL_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [status]);
+
+  useEffect(() => {
+    if (status !== "lost") return;
+    const timer = window.setTimeout(() => {
+      new Audio("/sounds/lose.mp3").play().catch(() => {});
     }, VICTORY_REVEAL_DELAY_MS);
     return () => window.clearTimeout(timer);
   }, [status]);
@@ -160,7 +169,17 @@ export default function Home() {
       <VictoryConfetti active={isWon && isTerminalRevealed} />
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
         <div className="mb-8 flex flex-col items-center gap-2">
-          <h1 className="font-rye text-5xl tracking-wide text-stone-900">Statle</h1>
+          <h1>
+            <Image
+              src="/state-pics/Statle.png"
+              alt="Statle"
+              width={360}
+              height={96}
+              className="h-20 w-auto"
+              priority
+              unoptimized
+            />
+          </h1>
           {mode === "daily" ? (
             <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-900/80 text-amber-100 border border-stone-700">
               Daily
