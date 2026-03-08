@@ -38,7 +38,7 @@
 
 **Geodle** challenges you to guess today's mystery US state using statistical clues that update with every guess.
 
-Each guess reveals color-coded feedback across 8 attributes — region, population, area, GDP per capita, coastline, median age, year of statehood, and landlocked status. Green means exact match, amber means close, red means wrong — with arrows telling you which direction to move for numeric clues. Hand someone the keyboard and they're hooked in 30 seconds.
+Each guess reveals color-coded feedback across 8 attributes — region, population, area, population density, electoral votes, GDP per capita, coastline, and year of statehood. Green means exact match, amber means close, red means wrong — with arrows telling you which direction to move for numeric clues. Hand someone the keyboard and they're hooked in 30 seconds.
 
 The game features a retro Americana aesthetic — warm parchment tones, vintage road-sign typography, and that nostalgic roadside-attraction energy.
 
@@ -117,11 +117,11 @@ The game features a retro Americana aesthetic — warm parchment tones, vintage 
 | Region            | Categorical | —                          |
 | Population        | Numeric     | ±20%                       |
 | Area (mi²)        | Numeric     | ±20%                       |
+| Density           | Numeric     | ±20%                       |
+| Electoral Votes   | Numeric     | `max(2, ceil(20%))`        |
 | GDP / Capita      | Numeric     | ±15%                       |
-| Coastline         | Categorical | Partial if any coast match |
-| Median Age        | Numeric     | ±3 years                   |
+| Coastline         | Categorical | Exact match                |
 | Year of Statehood | Numeric     | ±20 years                  |
-| Landlocked        | Boolean     | —                          |
 
 ## Team
 

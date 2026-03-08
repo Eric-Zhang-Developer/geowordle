@@ -21,7 +21,7 @@
   },
   {
     "name": "Arizona",
-    "region": "West",
+    "region": "Southwest",
     "population": 7151502,
     "area": 113990,
     "gdpPerCapita": 53000,
@@ -71,7 +71,7 @@
   },
   {
     "name": "Delaware",
-    "region": "South",
+    "region": "Northeast",
     "population": 989948,
     "area": 2489,
     "gdpPerCapita": 78000,
@@ -191,7 +191,7 @@
   },
   {
     "name": "Maryland",
-    "region": "South",
+    "region": "Northeast",
     "population": 6177224,
     "area": 12406,
     "gdpPerCapita": 73000,
@@ -301,7 +301,7 @@
   },
   {
     "name": "New Mexico",
-    "region": "West",
+    "region": "Southwest",
     "population": 2117522,
     "area": 121590,
     "gdpPerCapita": 48000,
@@ -351,7 +351,7 @@
   },
   {
     "name": "Oklahoma",
-    "region": "South",
+    "region": "Southwest",
     "population": 3959353,
     "area": 69899,
     "gdpPerCapita": 53000,
@@ -421,7 +421,7 @@
   },
   {
     "name": "Texas",
-    "region": "South",
+    "region": "Southwest",
     "population": 29145505,
     "area": 268596,
     "gdpPerCapita": 63600,
