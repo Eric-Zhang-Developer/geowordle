@@ -48,7 +48,7 @@ export function GuessTable({ guesses }: { guesses: GuessResult[] }) {
       <table className="border-separate border-spacing-2">
         <thead>
           <tr>
-            <th className="bg-gray-800 text-white text-xs font-semibold py-3 text-center whitespace-nowrap w-28 rounded">
+            <th className="bg-gray-800 text-white text-xs font-semibold py-3 text-center whitespace-nowrap min-w-[180px] rounded">
               State
             </th>
             {COLUMNS.map((col) => (
