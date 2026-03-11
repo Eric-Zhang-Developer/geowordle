@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import { Rye, Special_Elite } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const rye = Rye({ subsets: ["latin"], weight: "400", variable: "--font-rye" });
-const specialElite = Special_Elite({ subsets: ["latin"], weight: "400", variable: "--font-special-elite" });
+const specialElite = Special_Elite({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-special-elite",
+});
 
 export const metadata: Metadata = {
   title: "Statle",
@@ -18,7 +23,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${rye.variable} ${specialElite.variable} font-special-elite antialiased text-stone-900`}>{children}</body>
+      <body
+        className={`${rye.variable} ${specialElite.variable} font-special-elite antialiased text-stone-900`}
+      >
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
