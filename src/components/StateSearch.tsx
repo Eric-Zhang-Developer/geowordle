@@ -71,7 +71,9 @@ export function StateSearch({ value, remaining, onChange, onSubmit, disabled }: 
   const ghostText = ghostMatch ? value + ghostMatch.name.slice(value.length) : "";
 
   return (
-    <div className={`relative w-full max-w-sm mb-6 ${disabled ? "opacity-50 pointer-events-none" : ""}`}>
+    <div
+      className={`relative mb-4 w-full max-w-sm sm:mb-6 ${disabled ? "opacity-50 pointer-events-none" : ""}`}
+    >
       {/* Ghost suggestion layer (behind) */}
       <div className="w-full px-3 py-2 text-base text-stone-400 pointer-events-none whitespace-nowrap overflow-hidden select-none border border-transparent rounded" aria-hidden="true">
         {ghostText || "\u00A0"}

@@ -165,17 +165,17 @@ export default function Home() {
   }
 
   return (
-    <main className="w-full overflow-x-hidden px-3 pt-6 pb-2 sm:px-8 sm:pt-8 sm:pb-2">
+    <main className="w-full overflow-x-hidden px-3 pt-4 pb-2 sm:px-8 sm:pt-8 sm:pb-2">
       <VictoryConfetti active={isWon && isTerminalRevealed} />
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
-        <div className="mb-8 flex flex-col items-center gap-2">
+        <div className="mb-5 flex flex-col items-center gap-1.5 sm:mb-8 sm:gap-2">
           <h1>
             <Image
               src="/state-pics/Statle.png"
               alt="Statle"
               width={360}
               height={96}
-              className="h-20 w-auto"
+              className="h-16 w-auto sm:h-20"
               priority
               unoptimized
             />
@@ -190,7 +190,7 @@ export default function Home() {
             </span>
           )}
         </div>
-        <div className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-stone-900">
+        <div className="mb-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-[11px] text-stone-900 sm:mb-6 sm:gap-x-3 sm:gap-y-2 sm:text-xs">
           <span className="flex items-center gap-1 whitespace-nowrap">
             <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
             Correct
@@ -213,7 +213,7 @@ export default function Home() {
           onSubmit={submitGuess}
           disabled={status !== "playing"}
         />
-        <div className="rounded-2xl bg-stone-900/70 p-3 pb-2 backdrop-blur-sm">
+        <div className="rounded-2xl bg-stone-900/70 p-2.5 pb-2 backdrop-blur-sm sm:p-3 sm:pb-2">
           <GuessTable guesses={guesses} maxRows={maxGuesses} />
         </div>
         <RecapMap guesses={guesses} />

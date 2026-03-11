@@ -70,15 +70,15 @@ export function GuessTable({ guesses, maxRows }: { guesses: GuessResult[]; maxRo
         <table className="min-w-max border-separate border-spacing-2">
           <thead>
             <tr>
-              <th className="min-w-[132px] rounded bg-stone-700 px-2 py-2 text-center text-[10px] font-semibold whitespace-nowrap text-amber-50 sm:min-w-[180px] sm:py-3 sm:text-xs">
+              <th className="min-w-[104px] rounded bg-stone-700 px-1.5 py-1.5 text-center text-[9px] font-semibold whitespace-nowrap text-amber-50 sm:min-w-[180px] sm:px-2 sm:py-3 sm:text-xs">
                 State
               </th>
               {COLUMNS.map((col) => (
                 <th
                   key={col.key}
-                  className="w-20 rounded bg-stone-700 px-1 py-2 text-center text-[10px] leading-tight font-semibold text-amber-50 sm:w-24 sm:py-3 sm:text-xs"
+                  className="w-[66px] rounded bg-stone-700 px-1 py-1.5 text-center text-[9px] leading-tight font-semibold text-amber-50 sm:w-24 sm:py-3 sm:text-xs"
                 >
-                  <span className="flex min-h-10 items-center justify-center text-center">
+                  <span className="flex min-h-8 items-center justify-center text-center sm:min-h-10">
                     <span>
                       {col.labelLines.map((line, index) => (
                         <span key={line} className="block">
