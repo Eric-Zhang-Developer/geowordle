@@ -55,12 +55,22 @@ const DAILY_STATE_ORDER = [
 ] as const;
 
 const STATE_BY_NAME = new Map((statesData as State[]).map((state) => [state.name, state]));
+const DAILY_EPOCH_MS = new Date('2026-01-01').getTime();
+
+function getDailyDayIndex(nowMs: number = Date.now()): number {
+  return Math.floor((nowMs - DAILY_EPOCH_MS) / (1000 * 60 * 60 * 24));
+}
 
 export function getTodaysState(): State {
-  const epoch = new Date('2026-01-01').getTime();
-  const dayIndex = Math.floor((Date.now() - epoch) / (1000 * 60 * 60 * 24));
+  const dayIndex = getDailyDayIndex();
   const stateName = DAILY_STATE_ORDER[dayIndex % DAILY_STATE_ORDER.length];
   return STATE_BY_NAME.get(stateName) ?? ((statesData as State[])[0] as State);
+}
+
+export function getTodaysPuzzleDateString(): string {
+  const dayIndex = getDailyDayIndex();
+  const puzzleDate = new Date(DAILY_EPOCH_MS + dayIndex * 24 * 60 * 60 * 1000);
+  return puzzleDate.toISOString().slice(0, 10);
 }
 
 export function getRandomState(excludeNames: Set<string>): State {

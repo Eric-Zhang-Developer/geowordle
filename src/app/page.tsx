@@ -3,35 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useGame } from "../hooks/useGame";
-import { GuessResult } from "../lib/gameLogic";
 import { GuessTable } from "../components/GuessTable";
 import { RecapMap } from "../components/RecapMap";
 import { StateSearch } from "../components/StateSearch";
 import { VictoryConfetti } from "../components/VictoryConfetti";
+import { getTodaysPuzzleDateString } from "../lib/dailySeed";
 import { RoundStatus } from "../lib/gameRules";
-
-const SHARE_KEYS = [
-  "region",
-  "population",
-  "area",
-  "density",
-  "electoralVotes",
-  "gdpPerCapita",
-  "coastline",
-  "yearOfStatehood",
-] as const;
-const EMOJI: Record<string, string> = { correct: "🟩", close: "🟨", incorrect: "🟥" };
-
-function generateShareString(guesses: GuessResult[], mode: string, round: number): string {
-  const header =
-    mode === "daily"
-      ? `Statle (Daily) - ${guesses.length} Guesses`
-      : `Statle (Endless R${round}) - ${guesses.length} Guesses`;
-  const rows = guesses
-    .map((g) => SHARE_KEYS.map((k) => EMOJI[g.cells[k].state]).join(""))
-    .join("\n");
-  return `${header}\n\n${rows}`;
-}
+import { generateShareString } from "../lib/share";
 
 const VICTORY_REVEAL_DELAY_MS = 2500;
 
@@ -52,8 +30,9 @@ export default function Home() {
   } = useGame();
 
   const [isVictoryRevealed, setIsVictoryRevealed] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [shareStatus, setShareStatus] = useState<"idle" | "success" | "error">("idle");
   const recapRef = useRef<HTMLDivElement | null>(null);
+  const shareResetTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (status !== "won") return;
@@ -79,24 +58,52 @@ export default function Home() {
     recapRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [isTerminalRevealed]);
 
+  useEffect(() => {
+    return () => {
+      if (shareResetTimerRef.current !== null) {
+        window.clearTimeout(shareResetTimerRef.current);
+      }
+    };
+  }, []);
+
+  function resetShareFeedback() {
+    if (shareResetTimerRef.current !== null) {
+      window.clearTimeout(shareResetTimerRef.current);
+    }
+    shareResetTimerRef.current = window.setTimeout(() => {
+      setShareStatus("idle");
+      shareResetTimerRef.current = null;
+    }, 2000);
+  }
+
   function handleSwitchToEndless() {
     setIsVictoryRevealed(false);
+    setShareStatus("idle");
     switchToEndless();
   }
 
   function handleNextRound() {
     setIsVictoryRevealed(false);
+    setShareStatus("idle");
     nextRound();
   }
 
-  function handleShare() {
-    navigator.clipboard.writeText(generateShareString(guesses, mode, round));
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 2000);
+  async function handleShare(resultStatus: "won" | "lost") {
+    try {
+      await navigator.clipboard.writeText(
+        generateShareString(guesses, resultStatus, getTodaysPuzzleDateString())
+      );
+      setShareStatus("success");
+    } catch {
+      setShareStatus("error");
+    }
+    resetShareFeedback();
   }
 
   const isWon = status === "won";
   const isLost = status === "lost";
+  const shareButtonLabel =
+    shareStatus === "success" ? "Copied!" : shareStatus === "error" ? "Couldn't copy" : "Share";
 
   function renderTerminalPanel(roundStatus: RoundStatus) {
     if (!isTerminalRevealed) return null;
@@ -111,19 +118,21 @@ export default function Home() {
             Got it in {guesses.length} guess{guesses.length !== 1 ? "es" : ""}!
           </p>
           <div className="flex justify-center gap-4">
-            <button
-              onClick={handleShare}
-              className="cursor-pointer rounded bg-blue-500 px-8 py-3 text-lg font-semibold text-white hover:bg-blue-600"
-            >
-              {copied ? "Copied!" : "Share"}
-            </button>
             {mode === "daily" ? (
-              <button
-                onClick={handleSwitchToEndless}
-                className="cursor-pointer rounded bg-purple-500 px-8 py-3 text-lg font-semibold text-white hover:bg-purple-600"
-              >
-                Try Endless Mode
-              </button>
+              <>
+                <button
+                  onClick={() => handleShare("won")}
+                  className="cursor-pointer rounded bg-blue-500 px-8 py-3 text-lg font-semibold text-white hover:bg-blue-600"
+                >
+                  {shareButtonLabel}
+                </button>
+                <button
+                  onClick={handleSwitchToEndless}
+                  className="cursor-pointer rounded bg-purple-500 px-8 py-3 text-lg font-semibold text-white hover:bg-purple-600"
+                >
+                  Try Endless Mode
+                </button>
+              </>
             ) : (
               <button
                 onClick={handleNextRound}
@@ -146,12 +155,20 @@ export default function Home() {
           The correct state was {targetName}.
         </p>
         {mode === "daily" ? (
-          <button
-            onClick={handleSwitchToEndless}
-            className="cursor-pointer rounded bg-purple-500 px-8 py-3 text-lg font-semibold text-white hover:bg-purple-600"
-          >
-            Try Endless Mode
-          </button>
+          <div className="flex justify-center gap-4">
+            <button
+              onClick={() => handleShare("lost")}
+              className="cursor-pointer rounded bg-blue-500 px-8 py-3 text-lg font-semibold text-white hover:bg-blue-600"
+            >
+              {shareButtonLabel}
+            </button>
+            <button
+              onClick={handleSwitchToEndless}
+              className="cursor-pointer rounded bg-purple-500 px-8 py-3 text-lg font-semibold text-white hover:bg-purple-600"
+            >
+              Try Endless Mode
+            </button>
+          </div>
         ) : (
           <button
             onClick={handleNextRound}
