@@ -167,7 +167,7 @@ export default function Home() {
   return (
     <main className="w-full overflow-x-hidden px-3 pt-4 pb-2 sm:px-8 sm:pt-8 sm:pb-2">
       <VictoryConfetti active={isWon && isTerminalRevealed} />
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
+      <div className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center">
         <div className="mb-5 flex flex-col items-center gap-1.5 sm:mb-8 sm:gap-2">
           <h1>
             <Image
@@ -213,7 +213,7 @@ export default function Home() {
           onSubmit={submitGuess}
           disabled={status !== "playing"}
         />
-        <div className="rounded-2xl bg-stone-900/70 p-2.5 pb-2 backdrop-blur-sm sm:p-3 sm:pb-2">
+        <div className="w-full min-w-0 self-stretch rounded-2xl bg-stone-900/70 p-2.5 pb-2 backdrop-blur-sm sm:p-3 sm:pb-2">
           <GuessTable guesses={guesses} maxRows={maxGuesses} />
         </div>
         <RecapMap guesses={guesses} />
