@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CellDirection, CellState, getPopulationDensity, GuessResult, State } from "../lib/gameLogic";
+import {
+  CellDirection,
+  CellState,
+  getPopulationDensity,
+  GuessResult,
+  State,
+} from "../lib/gameLogic";
 import { GuessRow, PlaceholderGuessRow } from "./GuessRow";
 
 type Column =
@@ -47,7 +53,11 @@ const COLUMNS: ColumnDef[] = [
     fmt: (s) => `$${(s.gdpPerCapita / 1000).toFixed(0)}K`,
   },
   { key: "coastline", labelLines: ["Coastline"], fmt: (s) => s.coastline },
-  { key: "yearOfStatehood", labelLines: ["Year of", "Statehood"], fmt: (s) => `${s.yearOfStatehood}` },
+  {
+    key: "yearOfStatehood",
+    labelLines: ["Year of", "Statehood"],
+    fmt: (s) => `${s.yearOfStatehood}`,
+  },
 ];
 
 const BG: Record<CellState, string> = {
@@ -170,10 +180,10 @@ export function GuessTable({ guesses, maxRows }: { guesses: GuessResult[]; maxRo
           </table>
         </div>
         {showLeftFade && (
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-7 bg-gradient-to-r from-stone-900/85 via-stone-900/45 to-transparent sm:hidden" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-7 bg-linear-to-r from-stone-900/85 via-stone-900/45 to-transparent sm:hidden" />
         )}
         {showRightFade && (
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-stone-900/85 via-stone-900/45 to-transparent sm:hidden" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-stone-900/85 via-stone-900/45 to-transparent sm:hidden" />
         )}
       </div>
     </div>

@@ -69,7 +69,7 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
               width={56}
               height={56}
               sizes="(max-width: 640px) 40px, 56px"
-              className="h-8 w-8 flex-shrink-0 object-contain sm:h-14 sm:w-14"
+              className="h-8 w-8 shrink-0 object-contain sm:h-14 sm:w-14"
               unoptimized
             />
             <span className="flex-1 truncate text-left text-[10px] leading-tight sm:text-sm">
@@ -77,7 +77,9 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
             </span>
           </div>
         )}
-        {nameFlipping && <span className="absolute inset-0 bg-stone-700 rounded animate-cell-uncover origin-right" />}
+        {nameFlipping && (
+          <span className="absolute inset-0 bg-stone-700 rounded animate-cell-uncover origin-right" />
+        )}
       </td>
       {columns.map((col, i) => {
         const cellIdx = i + 1;
@@ -89,8 +91,11 @@ export function GuessRow({ guess, isNew, columns, bg, indicator }: GuessRowProps
             key={col.key}
             className={`${BASE_CELL_CLASS} w-[66px] px-1 text-white sm:w-24 sm:px-2 ${isActive ? bg[cell.state] : "bg-stone-700"}`}
           >
-            {isActive && `${col.fmt(guess.state)}${cell.direction ? indicator[cell.direction] : ""}`}
-            {isFlipping && <span className="absolute inset-0 bg-stone-700 rounded animate-cell-uncover origin-right" />}
+            {isActive &&
+              `${col.fmt(guess.state)}${cell.direction ? indicator[cell.direction] : ""}`}
+            {isFlipping && (
+              <span className="absolute inset-0 bg-stone-700 rounded animate-cell-uncover origin-right" />
+            )}
           </td>
         );
       })}

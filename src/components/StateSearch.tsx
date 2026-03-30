@@ -29,7 +29,7 @@ function StateThumb({ name }: { name: string }) {
   if (failed || !ext) {
     return (
       <div
-        className="w-12 h-12 flex-shrink-0"
+        className="w-12 h-12 shrink-0"
         title={`Place image in public/${STATE_PICS_FOLDER}/ as ${name.toLowerCase().replace(/\s+/g, "-")}.png (or .jpg)`}
       />
     );
@@ -41,7 +41,7 @@ function StateThumb({ name }: { name: string }) {
       alt=""
       width={48}
       height={48}
-      className="w-12 h-12 object-contain flex-shrink-0"
+      className="w-12 h-12 object-contain shrink-0"
       onError={() => {
         if (hasNext) setExtIndex((i) => i + 1);
         else setFailed(true);
