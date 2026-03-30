@@ -165,19 +165,19 @@ export default function Home() {
   }
 
   return (
-    <main className="w-full overflow-x-hidden px-3 pt-4 pb-2 sm:px-4 sm:pt-8 sm:pb-2">
+    <main className="w-full overflow-x-hidden px-3 pt-4 pb-2 sm:px-4 sm:pt-5 sm:pb-2">
       <VictoryConfetti active={isWon && isTerminalRevealed} />
       <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col items-center xl:max-w-[1750px]">
-        <div className="mb-5 flex flex-col items-center gap-1.5 sm:mb-8 sm:gap-2">
+        <div className="mb-3 flex flex-col items-center gap-1.5 sm:mb-2 sm:gap-2">
           <h1>
             <Image
-              src="/state-pics/Statle.png"
+              src="/assets/Statle.webp"
               alt="Statle"
-              width={360}
-              height={96}
-              className="h-16 w-auto sm:h-20"
+              width={428}
+              height={211}
+              sizes="(max-width: 640px) 256px, 320px"
+              className="h-[49px] w-auto sm:h-[65px]"
               priority
-              unoptimized
             />
           </h1>
           {mode === "daily" ? (
