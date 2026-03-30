@@ -114,7 +114,7 @@ export function GuessTable({ guesses, maxRows }: { guesses: GuessResult[]; maxRo
   }, [guesses.length, maxRows]);
 
   return (
-    <div className="mb-10 w-full min-w-0 max-w-full">
+    <div className="mb-10 w-full min-w-0 max-w-full sm:mb-5 sm:w-fit">
       {!hasScrolled && showRightFade && (
         <div className="mb-3 flex justify-center sm:hidden">
           <span className="rounded-full border border-stone-600/90 bg-stone-900/85 px-3 py-1 text-xs font-semibold tracking-[0.02em] text-amber-50 shadow-md backdrop-blur-sm">
@@ -125,7 +125,7 @@ export function GuessTable({ guesses, maxRows }: { guesses: GuessResult[]; maxRo
       <div className="relative">
         <div
           ref={scrollRef}
-          className="w-full min-w-0 max-w-full touch-pan-x overflow-x-auto overscroll-x-contain pb-2"
+          className="w-full min-w-0 max-w-full touch-pan-x overflow-x-auto overscroll-x-contain pb-2 sm:pb-1"
         >
           <table className="min-w-max border-separate border-spacing-2">
             <thead>

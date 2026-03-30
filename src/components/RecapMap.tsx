@@ -25,9 +25,9 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
   const stateNamesByAbbr = useMemo(
     () =>
       Object.fromEntries(
-        Object.entries(STATE_ABBREVIATIONS).map(([name, abbr]) => [abbr, name])
+        Object.entries(STATE_ABBREVIATIONS).map(([name, abbr]) => [abbr, name]),
       ) as Record<string, string>,
-    []
+    [],
   );
 
   guesses.forEach((g) => {
@@ -86,11 +86,11 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
       return {
         x: Math.max(
           TOOLTIP_PADDING,
-          Math.min(unclampedX, rect.width - tooltipWidth - TOOLTIP_PADDING)
+          Math.min(unclampedX, rect.width - tooltipWidth - TOOLTIP_PADDING),
         ),
         y: Math.max(
           TOOLTIP_PADDING,
-          Math.min(unclampedY, rect.height - tooltipHeight - TOOLTIP_PADDING)
+          Math.min(unclampedY, rect.height - tooltipHeight - TOOLTIP_PADDING),
         ),
       };
     }
@@ -159,7 +159,7 @@ export function RecapMap({ guesses }: { guesses: GuessResult[] }) {
 
   return (
     <div ref={containerRef} className="relative mt-4 flex w-full max-w-4xl flex-col items-center">
-      <p className="rounded-md border border-stone-800/30 bg-stone-950/20 px-4 py-1 text-center text-md text-stone-950 backdrop-blur-[1px]">
+      <p className="rounded-md border border-stone-800/30 bg-stone-950/20 px-4 py-1 text-center text-md text-amber-100 backdrop-blur-[1px]">
         Your guesses
       </p>
       <div className="w-full overflow-hidden">

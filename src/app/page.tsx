@@ -165,9 +165,9 @@ export default function Home() {
   }
 
   return (
-    <main className="w-full overflow-x-hidden px-3 pt-4 pb-2 sm:px-8 sm:pt-8 sm:pb-2">
+    <main className="w-full overflow-x-hidden px-3 pt-4 pb-2 sm:px-4 sm:pt-8 sm:pb-2">
       <VictoryConfetti active={isWon && isTerminalRevealed} />
-      <div className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center">
+      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col items-center xl:max-w-[1750px]">
         <div className="mb-5 flex flex-col items-center gap-1.5 sm:mb-8 sm:gap-2">
           <h1>
             <Image
@@ -190,33 +190,47 @@ export default function Home() {
             </span>
           )}
         </div>
-        <div className="mb-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-[11px] text-stone-900 sm:mb-6 sm:gap-x-3 sm:gap-y-2 sm:text-xs">
-          <span className="flex items-center gap-1 whitespace-nowrap">
-            <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
-            Correct
-          </span>
-          <span className="flex items-center gap-1 whitespace-nowrap">
-            <span className="inline-block w-3 h-3 rounded-sm bg-red-700" />
-            Wrong
-          </span>
-          <span className="flex items-center gap-1 whitespace-nowrap">
-            <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
-            Close
-          </span>
-          <span className="text-center text-stone-700">▲▼ = too low / too high</span>
-        </div>
+        <div className="w-full xl:flex xl:items-start xl:justify-start xl:gap-6">
+          <div className="flex w-full min-w-0 flex-col items-center xl:w-fit xl:max-w-full xl:flex-none xl:items-start">
+            <div className="bg-stone-900/70 py-2 px-3 rounded-2xl mb-2">
+              <div className="mb-2 flex w-full max-w-[320px] flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-[11px] text-amber-100 sm:max-w-[420px] sm:gap-x-3 sm:gap-y-2 sm:text-xs md:max-w-[520px] lg:max-w-[620px] xl:mb-3 xl:max-w-none xl:justify-start">
+                <span className="flex items-center gap-1 whitespace-nowrap ">
+                  <span className="inline-block w-3 h-3 rounded-sm bg-green-700" />
+                  <span>Correct</span>
+                </span>
+                <span className="flex items-center gap-1 whitespace-nowrap">
+                  <span className="inline-block w-3 h-3 rounded-sm bg-red-700" />
+                  Wrong
+                </span>
+                <span className="flex items-center gap-1 whitespace-nowrap">
+                  <span className="inline-block w-3 h-3 rounded-sm bg-amber-500" />
+                  Close
+                </span>
+                <span className="text-center">▲▼ = too low / too high</span>
+              </div>
 
-        <StateSearch
-          value={selected}
-          remaining={remaining}
-          onChange={setSelected}
-          onSubmit={submitGuess}
-          disabled={status !== "playing"}
-        />
-        <div className="w-full min-w-0 self-stretch rounded-2xl bg-stone-900/70 p-2.5 pb-2 backdrop-blur-sm sm:p-3 sm:pb-2">
-          <GuessTable guesses={guesses} maxRows={maxGuesses} />
+              <StateSearch
+                value={selected}
+                remaining={remaining}
+                onChange={setSelected}
+                onSubmit={submitGuess}
+                disabled={status !== "playing"}
+              />
+            </div>
+
+            <div className="w-full min-w-0 self-stretch rounded-2xl bg-stone-900/70 p-2.5 pb-2 backdrop-blur-sm flex items-center justify-center xl:w-fit xl:max-w-full xl:self-start xl:px-2.5 xl:pt-3 xl:pb-1 xl:flex-none">
+              <GuessTable guesses={guesses} maxRows={maxGuesses} />
+            </div>
+          </div>
+          <div className="hidden xl:block xl:min-w-[300px] xl:max-w-[800px] xl:flex-1 xl:mt-[110px]">
+            <div className="rounded-2xl bg-stone-900/60 p-3 backdrop-blur-sm">
+              <RecapMap guesses={guesses} />
+            </div>
+          </div>
         </div>
-        <RecapMap guesses={guesses} />
+        <div className="w-full max-w-[320px] self-center sm:max-w-[380px] md:max-w-[460px] lg:max-w-[560px] xl:hidden">
+          <RecapMap guesses={guesses} />
+        </div>
         {(isWon || isLost) && renderTerminalPanel(status)}
       </div>
     </main>
